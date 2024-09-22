@@ -9,20 +9,21 @@ project "MyOpenGL_Engine 2.0"
     location"MyOpenGL_Engine 2.0"
     kind "ConsoleApp"
     language "C++"
-    systemversion "latest"
     targetdir ("$(SolutionDir)$(Platform)/$(Configuration)/")
-    objdir ("$(Platform)/$(Configuration)/")
+    objdir ("$(Platform)/")
 
     files{
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/src/**.hpp",
+        "%{prj.name}/src/**.inl"
     }
 
     includedirs{
         "$(SolutionDir)dependencer/GLFW/include",
         "$(SolutionDir)dependencer/GLEW/include",
-        "$(SolutionDir)MyOpenGL_Engine 2.0/src/extra",
-        "$(SolutionDir)MyOpenGL_Engine 2.0/src"
+        "$(SolutionDir)%{prj.name}/src/extra",
+        "$(SolutionDir)%{prj.name}/src"
     }
 
     defines{
