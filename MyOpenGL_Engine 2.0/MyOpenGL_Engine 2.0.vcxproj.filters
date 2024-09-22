@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Render">
+      <UniqueIdentifier>{C5BB87CE-B15D-B2A4-9A18-C6F8865939F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra">
+      <UniqueIdentifier>{0975660F-7589-8EC0-3E0B-3220AADE8AF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra\glm">
+      <UniqueIdentifier>{D85B5798-44C6-0B0F-8D04-BDB4F9ADE963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra\glm\detail">
+      <UniqueIdentifier>{9A9048C1-8689-6713-AFBB-4C989B13471F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra\glm\simd">
+      <UniqueIdentifier>{34DF95A7-20AD-89AD-0941-FAD3F5AD6512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra\imGUI">
+      <UniqueIdentifier>{D3D8C10B-3F8E-3A01-C882-34D834373105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra\stb_image">
+      <UniqueIdentifier>{E3C4B992-4F50-2757-5861-AA4BC46B8357}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\DepthMapBuffer.h" />
+    <ClInclude Include="src\DynamicVertexbufferLayout.h" />
+    <ClInclude Include="src\ImguiFunction.h" />
+    <ClInclude Include="src\Render\Grassground.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\KeyControl.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\KeyControlFor3D.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\Render3D_Camera.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\RenderControler.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\RenderTexture2D.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\ShadowMap.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\ShadowMap2.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\light.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Render\stencil_test.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderGroup_10_unity.h" />
+    <ClInclude Include="src\TextureBlock.h" />
+    <ClInclude Include="src\TextureBlock8.h" />
+    <ClInclude Include="src\extra\glm\simd\common.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\exponential.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\geometric.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\integer.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\matrix.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\neon.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\packing.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\platform.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\trigonometric.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\glm\simd\vector_relational.h">
+      <Filter>extra\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imconfig.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imgui.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imgui_impl_glfw.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imgui_impl_opengl3.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imgui_impl_opengl3_loader.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imgui_internal.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imstb_rectpack.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imstb_textedit.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\imGUI\imstb_truetype.h">
+      <Filter>extra\imGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extra\stb_image\stb_image.h">
+      <Filter>extra\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\shader1.h" />
+    <ClInclude Include="src\shader2.h" />
+    <ClInclude Include="src\shader3.h" />
+    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\texture1.h" />
+    <ClInclude Include="src\texture32.h" />
+    <ClInclude Include="src\vertexbufferLayout.h" />
+    <ClInclude Include="src\vertexbufferLayout1.h" />
+    <ClInclude Include="src\vertexbufferLayout2.h" />
+    <ClInclude Include="src\vertexbufferLayout_vao_Group.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\DepthMapBuffer.cpp" />
+    <ClCompile Include="src\DynamicVertexbufferLayout.cpp" />
+    <ClCompile Include="src\ImguiFunction.cpp" />
+    <ClCompile Include="src\Render\Grassground.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\KeyControl.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\KeyControlFor3D.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\Render3D_Camera.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\RenderControler.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\RenderTexture2D.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\ShadowMap.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\ShadowMap2.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\light.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\stencil_test.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderGroup_10_unity.cpp" />
+    <ClCompile Include="src\TextureBlock.cpp" />
+    <ClCompile Include="src\TextureBlock8.cpp" />
+    <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\extra\glm\detail\glm.cpp">
+      <Filter>extra\glm\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\imGUI\imgui.cpp">
+      <Filter>extra\imGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\imGUI\imgui_demo.cpp">
+      <Filter>extra\imGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\imGUI\imgui_draw.cpp">
+      <Filter>extra\imGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\imGUI\imgui_impl_glfw.cpp">
+      <Filter>extra\imGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\imGUI\imgui_impl_opengl3.cpp">
+      <Filter>extra\imGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\imGUI\imgui_tables.cpp">
+      <Filter>extra\imGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\imGUI\imgui_widgets.cpp">
+      <Filter>extra\imGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extra\stb_image\stb_image.cpp">
+      <Filter>extra\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\shader1.cpp" />
+    <ClCompile Include="src\shader2.cpp" />
+    <ClCompile Include="src\shader3.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\texture1.cpp" />
+    <ClCompile Include="src\texture32.cpp" />
+    <ClCompile Include="src\vertexbufferLayout.cpp" />
+    <ClCompile Include="src\vertexbufferLayout1.cpp" />
+    <ClCompile Include="src\vertexbufferLayout2.cpp" />
+    <ClCompile Include="src\vertexbufferLayout_vao_Group.cpp" />
+  </ItemGroup>
+</Project>

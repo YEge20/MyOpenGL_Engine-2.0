@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D5843E4D-41E6-1B5B-CA53-620D36B4521A}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MyOpenGL_Engine 2.0</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\Debug\</IntDir>
+    <TargetName>MyOpenGL_Engine 2.0</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\Release\</IntDir>
+    <TargetName>MyOpenGL_Engine 2.0</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencer\GLFW\include;$(SolutionDir)dependencer\GLEW\include;$(SolutionDir)MyOpenGL_Engine 2.0\src\extra;$(SolutionDir)MyOpenGL_Engine 2.0\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencer\GLFW\lib-vc2022;..\dependencer\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencer\GLFW\include;$(SolutionDir)dependencer\GLEW\include;$(SolutionDir)MyOpenGL_Engine 2.0\src\extra;$(SolutionDir)MyOpenGL_Engine 2.0\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\dependencer\GLFW\lib-vc2022;..\dependencer\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\DepthMapBuffer.h" />
+    <ClInclude Include="src\DynamicVertexbufferLayout.h" />
+    <ClInclude Include="src\ImguiFunction.h" />
+    <ClInclude Include="src\Render\Grassground.h" />
+    <ClInclude Include="src\Render\KeyControl.h" />
+    <ClInclude Include="src\Render\KeyControlFor3D.h" />
+    <ClInclude Include="src\Render\Render3D_Camera.h" />
+    <ClInclude Include="src\Render\RenderControler.h" />
+    <ClInclude Include="src\Render\RenderTexture2D.h" />
+    <ClInclude Include="src\Render\ShadowMap.h" />
+    <ClInclude Include="src\Render\ShadowMap2.h" />
+    <ClInclude Include="src\Render\light.h" />
+    <ClInclude Include="src\Render\stencil_test.h" />
+    <ClInclude Include="src\ShaderGroup_10_unity.h" />
+    <ClInclude Include="src\TextureBlock.h" />
+    <ClInclude Include="src\TextureBlock8.h" />
+    <ClInclude Include="src\extra\glm\simd\common.h" />
+    <ClInclude Include="src\extra\glm\simd\exponential.h" />
+    <ClInclude Include="src\extra\glm\simd\geometric.h" />
+    <ClInclude Include="src\extra\glm\simd\integer.h" />
+    <ClInclude Include="src\extra\glm\simd\matrix.h" />
+    <ClInclude Include="src\extra\glm\simd\neon.h" />
+    <ClInclude Include="src\extra\glm\simd\packing.h" />
+    <ClInclude Include="src\extra\glm\simd\platform.h" />
+    <ClInclude Include="src\extra\glm\simd\trigonometric.h" />
+    <ClInclude Include="src\extra\glm\simd\vector_relational.h" />
+    <ClInclude Include="src\extra\imGUI\imconfig.h" />
+    <ClInclude Include="src\extra\imGUI\imgui.h" />
+    <ClInclude Include="src\extra\imGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="src\extra\imGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\extra\imGUI\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="src\extra\imGUI\imgui_internal.h" />
+    <ClInclude Include="src\extra\imGUI\imstb_rectpack.h" />
+    <ClInclude Include="src\extra\imGUI\imstb_textedit.h" />
+    <ClInclude Include="src\extra\imGUI\imstb_truetype.h" />
+    <ClInclude Include="src\extra\stb_image\stb_image.h" />
+    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\shader1.h" />
+    <ClInclude Include="src\shader2.h" />
+    <ClInclude Include="src\shader3.h" />
+    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\texture1.h" />
+    <ClInclude Include="src\texture32.h" />
+    <ClInclude Include="src\vertexbufferLayout.h" />
+    <ClInclude Include="src\vertexbufferLayout1.h" />
+    <ClInclude Include="src\vertexbufferLayout2.h" />
+    <ClInclude Include="src\vertexbufferLayout_vao_Group.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\DepthMapBuffer.cpp" />
+    <ClCompile Include="src\DynamicVertexbufferLayout.cpp" />
+    <ClCompile Include="src\ImguiFunction.cpp" />
+    <ClCompile Include="src\Render\Grassground.cpp" />
+    <ClCompile Include="src\Render\KeyControl.cpp" />
+    <ClCompile Include="src\Render\KeyControlFor3D.cpp" />
+    <ClCompile Include="src\Render\Render3D_Camera.cpp" />
+    <ClCompile Include="src\Render\RenderControler.cpp" />
+    <ClCompile Include="src\Render\RenderTexture2D.cpp" />
+    <ClCompile Include="src\Render\ShadowMap.cpp" />
+    <ClCompile Include="src\Render\ShadowMap2.cpp" />
+    <ClCompile Include="src\Render\light.cpp" />
+    <ClCompile Include="src\Render\stencil_test.cpp" />
+    <ClCompile Include="src\ShaderGroup_10_unity.cpp" />
+    <ClCompile Include="src\TextureBlock.cpp" />
+    <ClCompile Include="src\TextureBlock8.cpp" />
+    <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\extra\glm\detail\glm.cpp" />
+    <ClCompile Include="src\extra\imGUI\imgui.cpp" />
+    <ClCompile Include="src\extra\imGUI\imgui_demo.cpp" />
+    <ClCompile Include="src\extra\imGUI\imgui_draw.cpp" />
+    <ClCompile Include="src\extra\imGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\extra\imGUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\extra\imGUI\imgui_tables.cpp" />
+    <ClCompile Include="src\extra\imGUI\imgui_widgets.cpp" />
+    <ClCompile Include="src\extra\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\shader1.cpp" />
+    <ClCompile Include="src\shader2.cpp" />
+    <ClCompile Include="src\shader3.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\texture1.cpp" />
+    <ClCompile Include="src\texture32.cpp" />
+    <ClCompile Include="src\vertexbufferLayout.cpp" />
+    <ClCompile Include="src\vertexbufferLayout1.cpp" />
+    <ClCompile Include="src\vertexbufferLayout2.cpp" />
+    <ClCompile Include="src\vertexbufferLayout_vao_Group.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
