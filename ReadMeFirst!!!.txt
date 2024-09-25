@@ -1,7 +1,7 @@
 本工程框架的代码完全开放，但是仅供学习与参考用途！！！除了src中的extra文件里的代码，工程中剩下的全部代码都由作者独立完成
 
 
-1.初始化工程：本工程用VS2022制作，并且只支持使用它，请运行BuildProject.bat初始化解决方案，生成好MyOpenGL_Engine 2.0.sln文件就可以直接使用了。
+1.开始：本工程用VS2022制作，并且只支持使用它，打开MyOpenGL_Engine 2.0.sln文件可以直接使用了。
 
 2.框架的核心文件结构：dependencer存放opengl函数的核心库；src中是我的框架的所有源文件，里面还有Render和extra文件，Render里面存放着场景渲染的代码以及一些控件的代码，extra则是存放我使用的第三方辅助库，里面有glm数学库，stb_image的png格式的材质导入库，inGUI的简易UI库；sharder存放着色器文件。
 

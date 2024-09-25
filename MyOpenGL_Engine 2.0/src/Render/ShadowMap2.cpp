@@ -331,7 +331,7 @@ void ShadowMap2::renderContext()
 	if (m_degreeOflight > 90.0f && m_day == true)//白天过渡到夜晚
 	{
 		m_degreeOflight = -90.0f;
-		m_strength_light = 0.3f;
+		m_strength_light = 0.25f;
 		m_day = false;
 	}
 	if (m_degreeOflight > 90.0f && m_day == false)//夜晚过渡到白天
