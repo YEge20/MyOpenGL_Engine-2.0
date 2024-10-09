@@ -7,6 +7,7 @@
 #include"ShadowMap.h"
 #include"ShadowMap2.h"
 #include"stencil_test.h"
+#include"Triangle.h"
 
 #include<iostream>
 #include<GL/glew.h>
@@ -39,4 +40,5 @@ private:
 	std::unique_ptr<ShadowMap> m_ShadowMap;
 	std::unique_ptr<ShadowMap2> m_ShadowMap2;
 	std::unique_ptr<stencil_test> m_stencil_test;
+	std::unique_ptr<Triangle> m_Triangle;
 };

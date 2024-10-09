@@ -362,7 +362,6 @@ void ShadowMap2::renderContext()
 
 	//计算建模时所用到的投影和视图矩阵
 	glm::mat4 Lightproject = glm::ortho(-120.0f, 120.0f, -120.0f, 120.0f, 0.0f, 500.0f);
-	//glm::mat4 Lightproject2 = glm::perspective(glm::radians(45.0f), (float)960 / (float)640, 0.1f, 450.0f); //正在测试！
 	glm::mat4 LightView = glm::lookAt(m_light_position, glm::vec3(0.0f, -120.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f));
 	//矿石建模
 	m_shader_depth->bind();

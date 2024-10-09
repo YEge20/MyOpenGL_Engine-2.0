@@ -12,7 +12,7 @@ int main(void)
         
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1200, 800, "OpenGL_Engine (StudyVersion_2.5.3)", NULL, NULL);
+    window = glfwCreateWindow(1200, 800, "OpenGL_Engine (StudyVersion_2.5.4)", NULL, NULL);
     if (!window)
     {
         glfwTerminate();

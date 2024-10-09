@@ -13,6 +13,7 @@
 #include"vertexbufferLayout1.h"
 #include"vertexbufferLayout_vao_Group.h"
 #include"texture32.h"
+#include"TextureBlock.h"
 #include"TextureBlock8.h"
 #include"Render/KeyControlFor3D.h"
 #include"DepthMapBuffer.h"
@@ -72,7 +73,7 @@ private:
 	std::unique_ptr<vertexbufferLayout_vao_Group> m_vertexbufferlayout_2;
 	std::unique_ptr<KeyControlFor3D> m_control_Camera;
 	std::unique_ptr<texture32> m_texture32;
-	std::unique_ptr<TextureBlock8> m_textureblock;
+	std::unique_ptr<TextureBlock> m_textureblock;
 	std::unique_ptr<DepthMapBuffer> m_depth_texture;
 
 };

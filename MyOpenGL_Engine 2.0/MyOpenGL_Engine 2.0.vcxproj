@@ -113,7 +113,6 @@
     <ClInclude Include="src\Render\ShadowMap2.h" />
     <ClInclude Include="src\Render\light.h" />
     <ClInclude Include="src\Render\stencil_test.h" />
-    <ClInclude Include="src\ShaderGroup_10_unity.h" />
     <ClInclude Include="src\TextureBlock.h" />
     <ClInclude Include="src\TextureBlock8.h" />
     <ClInclude Include="src\extra\glm\common.hpp" />
@@ -563,6 +562,7 @@
     <ClInclude Include="src\vertexbufferLayout1.h" />
     <ClInclude Include="src\vertexbufferLayout2.h" />
     <ClInclude Include="src\vertexbufferLayout_vao_Group.h" />
+    <ClInclude Include="src\Render\Triangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DepthMapBuffer.cpp" />
@@ -578,7 +578,6 @@
     <ClCompile Include="src\Render\ShadowMap2.cpp" />
     <ClCompile Include="src\Render\light.cpp" />
     <ClCompile Include="src\Render\stencil_test.cpp" />
-    <ClCompile Include="src\ShaderGroup_10_unity.cpp" />
     <ClCompile Include="src\TextureBlock.cpp" />
     <ClCompile Include="src\TextureBlock8.cpp" />
     <ClCompile Include="src\application.cpp" />
@@ -602,6 +601,7 @@
     <ClCompile Include="src\vertexbufferLayout1.cpp" />
     <ClCompile Include="src\vertexbufferLayout2.cpp" />
     <ClCompile Include="src\vertexbufferLayout_vao_Group.cpp" />
+    <ClCompile Include="src\Render\Triangle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -36,8 +36,8 @@ RenderTexture2D::RenderTexture2D(GLFWwindow* window)
     m_light{0.0f}, m_rota(0.0f),m_XY{0.0f},m_time(0)
 {    
     std::cout << "Running 2D system\n" << std::endl;
-    m_shader = std::make_unique<Shader>("./sharder/ComplexShaderFor2D.shader");
-    m_shader1 = std::make_unique<Shader1>("./sharder/BasicShader.shader");
+    m_shader = std::make_unique<Shader>("./sharder/RenderTexture2D/ComplexShaderFor2D.shader");
+    m_shader1 = std::make_unique<Shader1>("./sharder/RenderTexture2D/BasicShader.shader");
 
  //±≥æ∞ª∫¥Ê…Ë÷√£∫
 #define background 28

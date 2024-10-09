@@ -20,9 +20,9 @@ GrassGround::GrassGround(GLFWwindow* window)
 	m_grass_move(0.0f,-120.0f,0.0f),m_red(0),m_grass_2_move(0.0f,-112.0f,0.0f)
 {
 	std::cout << "Running Grassground.cpp" << std::endl;
-	m_shader = std::make_unique<Shader>("./sharder/mix/BasicShader3D(Light_version)2.shader");
-	m_shader_1 = std::make_unique<Shader1>("./sharder/mix/GrassGround.shader");
-	m_shader_2 = std::make_unique<shader3>("./sharder/mix/Grass.shader");
+	m_shader = std::make_unique<Shader>("./sharder/Grassground/BasicShader3D(Light_version)2.shader");
+	m_shader_1 = std::make_unique<Shader1>("./sharder/Grassground/GrassGround.shader");
+	m_shader_2 = std::make_unique<shader3>("./sharder/Grassground/Grass.shader");
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
 	{

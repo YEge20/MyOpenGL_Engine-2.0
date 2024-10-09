@@ -299,10 +299,11 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 		"./texture/smoker/smoker_front.png",
 		"./texture/smoker/smoker_side.png"
 	};
-	m_textureblock = std::make_unique<TextureBlock8>(true, false);
-	m_textureblock->importtexture(smoker, 1);
-	m_textureblock->bind(1);
-
+	m_textureblock = std::make_unique<TextureBlock>(smoker, true, false);
+	//m_textureblock = std::make_unique<TextureBlock8>(true, false);
+	//m_textureblock->importtexture(smoker, 1);
+	//m_textureblock->bind(1);
+	m_textureblock->bind();
 
 	//3D渲染必须启动深度测试否则渲染过程不正确：
 	glEnable(GL_DEPTH_TEST);
@@ -577,6 +578,7 @@ void ShadowMap::renderContext()
 	}
 //渲染熔炉：
 	m_shader->bind();
+
 	glBindVertexArray(m_vertexbufferlayout->VAOid());
 	glm::mat4 MVP5 = m_project * CameraView * france_model;
 	m_shader->setuniformMat4f("u_MVP", MVP5);
