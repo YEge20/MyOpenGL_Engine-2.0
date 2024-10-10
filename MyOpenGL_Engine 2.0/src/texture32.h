@@ -3,6 +3,7 @@
 #include <string>
 #include"GL/glew.h"
 
+//注意：此api不稳定，可能会影响其他的api的bind指令的正常运行！！！
 class texture32
 {
 public:

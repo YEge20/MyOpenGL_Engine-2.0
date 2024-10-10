@@ -1,4 +1,5 @@
 #include"Render/RenderControler.h"
+#include<Windows.h>
 
 RenderControler::RenderControler(GLFWwindow* window, usemode mode, int auto_ProjectNum)
 	:m_window(window),m_singleObject(0)
@@ -57,6 +58,7 @@ void RenderControler::renderImguiContextControl()
 int RenderControler::AutoRenderControl(int projectnum)
 {
 	m_singleObject = projectnum;
+	system("color 02");
 	//注册渲染对象的初始化信息(必须)：
 	if (m_singleObject == 0)
 		m_Triangle = std::make_unique<Triangle>(m_window);
@@ -75,7 +77,10 @@ int RenderControler::AutoRenderControl(int projectnum)
 	else if (m_singleObject == 7)
 		m_stencil_test = std::make_unique<stencil_test>(m_window);
 	else
+	{
+		system("color 04");
 		std::cout << "<RenderControl error>:没有注册此渲染对象的相关信息，请检查Rendercontroler.cpp(或.h)文件" << std::endl;
+	}
 	return 0;
 }
 
