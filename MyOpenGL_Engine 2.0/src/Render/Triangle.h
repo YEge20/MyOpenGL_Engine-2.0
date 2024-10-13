@@ -1,11 +1,13 @@
 #pragma once
 #include<memory>
+#include<vector>
 #include"glm/glm.hpp"
 #include"glm/gtc/matrix_transform.hpp"
 
 #include"shader.h"
 #include"ImguiFunction.h"
 #include"vertexbufferLayout.h"
+
 class Triangle
 {
 public:
@@ -16,9 +18,7 @@ public:
 private:
 	GLFWwindow* m_window;
 	std::shared_ptr<Shader> m_shader;
-	std::shared_ptr<Shader> m_shader2;
 	std::shared_ptr<vertexbufferlayout> m_vertexbufferlayout;
-	std::shared_ptr<vertexbufferlayout> m_vertexbufferlayout2;
 };
 
 /*注意:这个简单的三角形使用的智能指针方式与其他的项目不相同

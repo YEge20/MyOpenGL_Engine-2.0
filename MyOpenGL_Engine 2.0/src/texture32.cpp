@@ -12,7 +12,7 @@ texture32::~texture32()
 	glDeleteTextures(32, m_texture);
 }
 
-void texture32::importTexture(const std::string & filepath, const int position_of_texture)
+void texture32::importTexture(const std::string& filepath, const int position_of_texture)
 {
 	int width, height, BPP;
 	m_data = stbi_load(filepath.c_str(), &width, &height, &BPP, 0);//µº»Î≤ƒ÷ 

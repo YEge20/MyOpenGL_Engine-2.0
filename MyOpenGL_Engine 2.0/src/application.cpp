@@ -28,7 +28,7 @@ int main(void)
         std::cout << "glew_lib ok!"<<std::endl;
     std::cout << "OpenGL and GPUDrive version: " << glGetString(GL_VERSION) << " ready\n" << "DebugInformation:" << std::endl;
 
-    RenderControler RenderControler(window, AUTO, 6);
+    RenderControler RenderControler(window, AUTO, 0);
 
     //初始化imgui功能：
     ImguiFunction ImguiFunction(window,2);

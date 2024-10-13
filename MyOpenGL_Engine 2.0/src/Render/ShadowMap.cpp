@@ -243,7 +243,6 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 		12,13,14,
 		13,14,15
 	};
-#define tiny_stoneBuffer 
 	m_vertexbufferlayout_2 = std::make_unique<vertexbufferLayout_vao_Group>();
 
 	m_vertexbufferlayout_2->importVertex(grass, grassLayout, grassBuffer, grassLayoutNum, 0);
@@ -316,7 +315,7 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 }
 
 void ShadowMap::renderContext()
-{
+{	
 //平行光的位置、亮度的计算
 	if (m_degreeOflight > 90.0f && m_day == true)//白天
 	{

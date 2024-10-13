@@ -80,6 +80,7 @@ Render3D_Camera::Render3D_Camera(GLFWwindow* window)
 	//材质设定：
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	std::vector<std::string> face =
 	{
 		"./texture/furnace/furnace_side.png",
@@ -98,10 +99,13 @@ Render3D_Camera::Render3D_Camera(GLFWwindow* window)
 		"./texture/furnace/furnace_front_on.png",
 		"./texture/furnace/furnace_side.png"
 	};
+
 	m_textureblock = std::make_unique<TextureBlock8>(true, false);
 	m_textureblock->importtexture(face,0);
 	m_textureblock->importtexture(face2,1);
 	m_textureblock->bind(0);
+
+
 	//3D渲染必须启动深度测试否侧渲染过程不正确：
 	glEnable(GL_DEPTH_TEST);
 
