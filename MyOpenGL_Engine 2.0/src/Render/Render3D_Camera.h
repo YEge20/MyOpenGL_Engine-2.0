@@ -34,8 +34,8 @@ private:
 	glm::vec3 m_camera_Up;//摄像机的向上方向
 
 
-	std::unique_ptr<Shader> m_shader;
-	std::unique_ptr<vertexbufferlayout> m_vertexbufferlayout;
+	std::shared_ptr<Shader> m_shader;
+	std::shared_ptr<vertexbufferlayout> m_vertexbufferlayout;
 	std::unique_ptr<KeyControlFor3D> m_control_Camera;
 	std::unique_ptr<TextureBlock8> m_textureblock;
 };

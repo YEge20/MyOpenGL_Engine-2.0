@@ -20,9 +20,9 @@ GrassGround::GrassGround(GLFWwindow* window)
 	m_grass_move(0.0f,-120.0f,0.0f),m_red(0),m_grass_2_move(0.0f,-112.0f,0.0f)
 {
 	std::cout << "Running Grassground.cpp" << std::endl;
-	m_shader = std::make_unique<Shader>("./sharder/Grassground/BasicShader3D(Light_version)2.shader");
-	m_shader_1 = std::make_unique<Shader1>("./sharder/Grassground/GrassGround.shader");
-	m_shader_2 = std::make_unique<shader3>("./sharder/Grassground/Grass.shader");
+	m_shader.reset(new Shader("./sharder/Grassground/BasicShader3D(Light_version)2.shader"));
+	m_shader_1.reset(new Shader("./sharder/Grassground/GrassGround.shader"));
+	m_shader_2.reset(new Shader("./sharder/Grassground/Grass.shader"));
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
 	{
@@ -85,7 +85,7 @@ GrassGround::GrassGround(GLFWwindow* window)
 		21,22,23
 	};
 	//顶点的设置：
-	m_vertexbufferlayout = std::make_unique<vertexbufferlayout>(vertexbuffer, Layout, Databuffer3D, LayoutNum0);
+	m_vertexbufferlayout.reset(new vertexbufferlayout(vertexbuffer, Layout, Databuffer3D, LayoutNum0));
 	m_vertexbufferlayout->AttribPointer(countOfindex, DatabufferSize, 8);
 
 #define grassgroundBuffer 216
@@ -147,7 +147,7 @@ GrassGround::GrassGround(GLFWwindow* window)
 		20,21,22,
 		21,22,23
 	};
-	m_vertexbufferlayout_1 = std::make_unique<vertexbufferLayout1>(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum);
+	m_vertexbufferlayout_1.reset(new vertexbufferlayout(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum));
 	m_vertexbufferlayout_1->AttribPointer(grassgroundCountIndex, grassgroundIndex, 9);
 
 #define grassBuffer 80
@@ -178,7 +178,7 @@ GrassGround::GrassGround(GLFWwindow* window)
 		4,5,6,
 		5,6,7
 	};
-	m_vertexbufferlayout_2 = std::make_unique<vertexbufferLayout2>(grass, grassLayout, grassBuffer, grassLayoutNum);
+	m_vertexbufferlayout_2.reset(new vertexbufferlayout(grass, grassLayout, grassBuffer, grassLayoutNum));
 	m_vertexbufferlayout_2->AttribPointer(grassCountIndex, grassIndex, 10);
 
 	//材质设定：

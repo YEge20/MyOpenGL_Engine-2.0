@@ -22,10 +22,10 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 
 {
 	std::cout << "Running ShadowMap2.cpp" << std::endl;
-	m_shader = std::make_unique<Shader>("./sharder/depth2/BasicShader3D(Light_version)3.shader");
-	m_shader_1 = std::make_unique<Shader1>("./sharder/depth2/GrassGround.shader");
-	m_shader_2 = std::make_unique<shader3>("./sharder/depth2/Grass.shader");
-	m_shader_depth = std::make_unique<Shader2>("./sharder/depth2/depthMap.shader");
+	m_shader.reset(new Shader("./sharder/depth2/BasicShader3D(Light_version)3.shader"));
+	m_shader_1.reset(new Shader("./sharder/depth2/GrassGround.shader"));
+	m_shader_2.reset(new Shader("./sharder/depth2/Grass.shader"));
+	m_shader_depth.reset(new Shader("./sharder/depth2/depthMap.shader"));
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
 	{
@@ -63,8 +63,8 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 #define countOfindex 3
 	int DatabufferSize[countOfindex] =
 	{
-		//vertex:    normalize:        texcoord:
-		3,                  3,          2
+		//vertex:         normalize:        texcoord:
+		3,                3,                2
 	};
 #define LayoutNum0 36
 	unsigned int Layout[LayoutNum0] =
@@ -88,7 +88,8 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 		21,22,23
 	};
 	//∂•µ„µƒ…Ë÷√£∫
-	m_vertexbufferlayout = std::make_unique<vertexbufferlayout>(vertexbuffer, Layout, Databuffer3D, LayoutNum0);
+	//m_vertexbufferlayout = std::make_unique<vertexbufferlayout>(vertexbuffer, Layout, Databuffer3D, LayoutNum0);
+	m_vertexbufferlayout.reset(new vertexbufferlayout(vertexbuffer, Layout, Databuffer3D, LayoutNum0));
 	m_vertexbufferlayout->AttribPointer(countOfindex, DatabufferSize, 8);
 
 #define grassgroundBuffer 288
@@ -150,7 +151,8 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 		20,21,22,
 		21,22,23
 	};
-	m_vertexbufferlayout_1 = std::make_unique<vertexbufferLayout1>(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum);
+	//m_vertexbufferlayout_1 = std::make_unique<vertexbufferLayout1>(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum);
+	m_vertexbufferlayout_1.reset(new vertexbufferlayout(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum));
 	m_vertexbufferlayout_1->AttribPointer(grassgroundCountIndex, grassgroundIndex, 12);
 
 #define grassBuffer 208
@@ -258,7 +260,7 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	m_texture32 = std::make_unique<texture32>(false);
+	m_texture32.reset(new texture32(false));
 	m_texture32->importTexture("./texture/ground/grass001.png", 0);
 
 	m_texture32->importTexture("./texture/ground/dirt.png", 1);

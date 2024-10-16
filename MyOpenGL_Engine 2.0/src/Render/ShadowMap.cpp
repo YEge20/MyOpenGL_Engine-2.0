@@ -21,10 +21,10 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 	m_red_factor(0.0f),m_white_factor(0.0f),m_day(true),m_strength_light(1.2f)
 {
 	std::cout << "Running ShadowMap.cpp" << std::endl;
-	m_shader = std::make_unique<Shader>("./sharder/depth/BasicShader3D(Light_version)3.shader");
-	m_shader_1 = std::make_unique<Shader1>("./sharder/depth/GrassGround.shader");
-	m_shader_2 = std::make_unique<shader3>("./sharder/depth/Grass.shader");
-	m_shader_depth = std::make_unique<Shader2>("./sharder/depth/depthMap.shader");
+	m_shader.reset(new Shader("./sharder/depth/BasicShader3D(Light_version)3.shader"));
+	m_shader_1.reset(new Shader("./sharder/depth/GrassGround.shader"));
+	m_shader_2.reset(new Shader("./sharder/depth/Grass.shader"));
+	m_shader_depth.reset(new Shader("./sharder/depth/depthMap.shader"));
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
 	{
@@ -87,7 +87,7 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 		21,22,23
 	};
 	//∂•µ„µƒ…Ë÷√£∫
-	m_vertexbufferlayout = std::make_unique<vertexbufferlayout>(vertexbuffer, Layout, Databuffer3D, LayoutNum0);
+	m_vertexbufferlayout.reset(new vertexbufferlayout(vertexbuffer, Layout, Databuffer3D, LayoutNum0));
 	m_vertexbufferlayout->AttribPointer(countOfindex, DatabufferSize, 8);
 
 #define grassgroundBuffer 288
@@ -149,7 +149,7 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 		20,21,22,
 		21,22,23
 	};
-	m_vertexbufferlayout_1 = std::make_unique<vertexbufferLayout1>(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum);
+	m_vertexbufferlayout_1.reset(new vertexbufferlayout(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum));
 	m_vertexbufferlayout_1->AttribPointer(grassgroundCountIndex, grassgroundIndex, 12);
 
 #define grassBuffer 208

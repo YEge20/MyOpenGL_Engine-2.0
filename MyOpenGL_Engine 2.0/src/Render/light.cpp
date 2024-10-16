@@ -9,9 +9,9 @@ light::light(GLFWwindow* window)
 	m_camera_Pos(0.0f, 41.0f, 25.0f), m_camera_Fro(0.0f, 0.0f, 1.0f), m_camera_Up(0.0f, 1.0f, 0.0f)
 {
 	std::cout << "Running light.cpp" << std::endl;
-	m_shader = std::make_unique<Shader>("./sharder/light/BasicShader3D_object.shader");
-	m_shader1 = std::make_unique<Shader1>("./sharder/light/BasicShader3D_light_object.shader");
-	m_shaderSkybox = std::make_unique<shader3>("./sharder/light/SkyboxShader.shader");
+	m_shader.reset(new Shader("./sharder/light/BasicShader3D_object.shader"));
+	m_shader1.reset(new Shader("./sharder/light/BasicShader3D_light_object.shader"));
+	m_shaderSkybox.reset(new Shader("./sharder/light/SkyboxShader.shader"));
 	//VAO 0的设置：
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
@@ -74,7 +74,7 @@ light::light(GLFWwindow* window)
 		20,21,22,
 		21,22,23
 	};
-	m_vertexbufferlayout = std::make_unique<vertexbufferlayout>(vertexbuffer, Layout, Databuffer3D, LayoutNum);
+	m_vertexbufferlayout.reset(new vertexbufferlayout(vertexbuffer, Layout, Databuffer3D, LayoutNum));
 	m_vertexbufferlayout->AttribPointer(countOfindex, DatabufferSize, 8);
 	//VAO 1 的设置：
 #define Databuffer3D_1 72
@@ -138,7 +138,7 @@ light::light(GLFWwindow* window)
 		20,21,22,
 		21,22,23
 	};
-	m_vertexbufferlayout1 = std::make_unique<vertexbufferLayout1>(vertexbuffer1, Layout1, Databuffer3D_1, LayoutNum_1);
+	m_vertexbufferlayout1.reset(new vertexbufferlayout(vertexbuffer1, Layout1, Databuffer3D_1, LayoutNum_1));
 	m_vertexbufferlayout1->AttribPointer(countOfindex_1, DatabufferSize1, 3);
 	//VAO 2(天空盒)的设置:
 #define Databuffer_3D_2 72
@@ -201,7 +201,7 @@ light::light(GLFWwindow* window)
 		20,21,22,
 		21,22,23
 	};
-	m_vertexbufferlayout2 = std::make_unique<vertexbufferLayout2>(skybox,skyboxLayout,Databuffer_3D_2,skyboxLayoutNum);
+	m_vertexbufferlayout2.reset(new vertexbufferlayout(skybox, skyboxLayout, Databuffer_3D_2, skyboxLayoutNum));
 	m_vertexbufferlayout2->AttribPointer(countOfindex_2, index2, 3);
 	//材质设定及导入：
 	glEnable(GL_BLEND);

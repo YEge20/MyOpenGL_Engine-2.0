@@ -36,8 +36,8 @@ RenderTexture2D::RenderTexture2D(GLFWwindow* window)
     m_light{0.0f}, m_rota(0.0f),m_XY{0.0f},m_time(0)
 {    
     std::cout << "Running 2D system\n" << std::endl;
-    m_shader = std::make_unique<Shader>("./sharder/RenderTexture2D/ComplexShaderFor2D.shader");
-    m_shader1 = std::make_unique<Shader1>("./sharder/RenderTexture2D/BasicShader.shader");
+    m_shader.reset(new Shader("./sharder/RenderTexture2D/ComplexShaderFor2D.shader"));
+    m_shader1.reset(new Shader("./sharder/RenderTexture2D/BasicShader.shader"));
 
  //背景缓存设置：
 #define background 28
@@ -60,10 +60,10 @@ RenderTexture2D::RenderTexture2D(GLFWwindow* window)
         0,1,2,
         1,2,3
     };
-    m_vertexLayout = std::make_unique<vertexbufferlayout>(backgroundvertex, BLayout, background, backgroundLayout);
+    m_vertexLayout.reset(new vertexbufferlayout(backgroundvertex, BLayout, background, backgroundLayout));
     m_vertexLayout->AttribPointer(indexOfBackground, backgroundIndex, 7);
  //顶点的设置（使用动态绑定进行初始化）：
-    m_dynamicLayout = std::make_unique<DynamicVertexbufferLayout>(layout,DataBuffer,LayoutNumber);
+    m_dynamicLayout.reset(new DynamicVertexbufferLayout(layout, DataBuffer, LayoutNumber));
     m_dynamicLayout->AttribPointer(CountOfIndex,DataBufferSize,10);    
 //材质的设置：
     glEnable(GL_BLEND);

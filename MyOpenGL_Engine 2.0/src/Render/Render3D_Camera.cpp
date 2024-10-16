@@ -11,7 +11,7 @@ Render3D_Camera::Render3D_Camera(GLFWwindow* window)
 	m_fire_light(0.15f)
 {
 	std::cout << "Runnig Render3D_Camera.cpp" << std::endl;
-	m_shader = std::make_unique<Shader>("./sharder/BasicShader3D(Light_version).shader");
+	m_shader.reset(new Shader("./sharder/BasicShader3D(Light_version).shader"));
 	m_shader->bind();
 #define Databuffer3D 144
 	float vertexbuffer[Databuffer3D] =
@@ -75,7 +75,7 @@ Render3D_Camera::Render3D_Camera(GLFWwindow* window)
 		21,22,23
 	};
 	//顶点的设置：
-	m_vertexbufferlayout = std::make_unique<vertexbufferlayout>(vertexbuffer,Layout,Databuffer3D,LayoutNum);
+	m_vertexbufferlayout.reset(new vertexbufferlayout(vertexbuffer, Layout, Databuffer3D, LayoutNum));
 	m_vertexbufferlayout->AttribPointer(countOfindex,DatabufferSize,6);
 	//材质设定：
 	glEnable(GL_BLEND);

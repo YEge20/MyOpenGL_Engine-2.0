@@ -10,7 +10,4 @@ public:
 
 	void RunImgui();
 	void updateImgui();
-
-private:
-
 };

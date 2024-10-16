@@ -1,7 +1,6 @@
 #pragma once
 #include<memory>
 #include"shader.h"
-#include"shader1.h"
 #include"glm/glm.hpp"
 #include"glm/gtc/matrix_transform.hpp"
 
@@ -23,10 +22,10 @@ public:
 private:
 	GLFWwindow* m_window;
 	
-	std::unique_ptr<Shader> m_shader;
-	std::unique_ptr<Shader1> m_shader1;
-	std::unique_ptr<DynamicVertexbufferLayout> m_dynamicLayout;
-	std::unique_ptr<vertexbufferlayout> m_vertexLayout;
+	std::shared_ptr<Shader> m_shader;
+	std::shared_ptr<Shader> m_shader1;
+	std::shared_ptr<DynamicVertexbufferLayout> m_dynamicLayout;
+	std::shared_ptr<vertexbufferlayout> m_vertexLayout;
 	std::unique_ptr<texture32> m_texture;
 	std::unique_ptr<KeyControlFunction> m_keyboard;
 

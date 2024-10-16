@@ -3,7 +3,7 @@
 Triangle::Triangle(GLFWwindow* window)
 	:m_window(window)
 {
-    std::cout << "Running Triangle.cpp\n" << std::endl;
+    std::cout << "Running Triangle.cpp" << std::endl;
     m_shader.reset(new Shader("./sharder/BasicShader2.shader"));
 #define triangle 28
     float trianglevertex[triangle] =
@@ -38,10 +38,15 @@ void Triangle::renderContext()
     glBindVertexArray(m_vertexbufferlayout->VAOid());
     m_shader->bind();
     m_shader->setuniformMat4f("u_MVP", project);
-    glDrawElements(GL_TRIANGLES, triangleLayout1, GL_UNSIGNED_INT, nullptr);}
+    glDrawElements(GL_TRIANGLES, triangleLayout1, GL_UNSIGNED_INT, nullptr);
+
+    //设置按下esc键后关闭程序：
+    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(m_window, true);
+}
 
 void Triangle::renderImguiContext()
 {
-    ImGui::Text("This is a simple way to draw two triangle...");
+    ImGui::Text("This is a simple way to draw two triangles.\nPress Esc to end the program...");
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 }

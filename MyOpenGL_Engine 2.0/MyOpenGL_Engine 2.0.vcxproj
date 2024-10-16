@@ -552,15 +552,9 @@
     <ClInclude Include="src\extra\imGUI\imstb_truetype.h" />
     <ClInclude Include="src\extra\stb_image\stb_image.h" />
     <ClInclude Include="src\shader.h" />
-    <ClInclude Include="src\shader1.h" />
-    <ClInclude Include="src\shader2.h" />
-    <ClInclude Include="src\shader3.h" />
     <ClInclude Include="src\texture.h" />
-    <ClInclude Include="src\texture1.h" />
     <ClInclude Include="src\texture32.h" />
     <ClInclude Include="src\vertexbufferLayout.h" />
-    <ClInclude Include="src\vertexbufferLayout1.h" />
-    <ClInclude Include="src\vertexbufferLayout2.h" />
     <ClInclude Include="src\vertexbufferLayout_vao_Group.h" />
     <ClInclude Include="src\Render\Triangle.h" />
   </ItemGroup>
@@ -592,15 +586,9 @@
     <ClCompile Include="src\extra\imGUI\imgui_widgets.cpp" />
     <ClCompile Include="src\extra\stb_image\stb_image.cpp" />
     <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\shader1.cpp" />
-    <ClCompile Include="src\shader2.cpp" />
-    <ClCompile Include="src\shader3.cpp" />
     <ClCompile Include="src\texture.cpp" />
-    <ClCompile Include="src\texture1.cpp" />
     <ClCompile Include="src\texture32.cpp" />
     <ClCompile Include="src\vertexbufferLayout.cpp" />
-    <ClCompile Include="src\vertexbufferLayout1.cpp" />
-    <ClCompile Include="src\vertexbufferLayout2.cpp" />
     <ClCompile Include="src\vertexbufferLayout_vao_Group.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
