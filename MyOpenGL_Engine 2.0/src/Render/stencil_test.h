@@ -14,7 +14,7 @@ class stencil_test
 public:
 	stencil_test(GLFWwindow* window);
 
-	void renderContext();
+	void renderContext(float timestep, float milltimestep);
 	void renderImguiContext();
 private:
 	float m_fov;

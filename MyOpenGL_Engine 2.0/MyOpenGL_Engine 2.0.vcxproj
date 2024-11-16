@@ -100,6 +100,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Render\DynamicTextureBuffer.h" />
+    <ClInclude Include="src\DynamicEnvironmentBuffer.h" />
+    <ClInclude Include="src\DrawBlock.h" />
     <ClInclude Include="src\DepthMapBuffer.h" />
     <ClInclude Include="src\DynamicVertexbufferLayout.h" />
     <ClInclude Include="src\ImguiFunction.h" />
@@ -554,11 +557,15 @@
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\texture32.h" />
+    <ClInclude Include="src\timestep.h" />
     <ClInclude Include="src\vertexbufferLayout.h" />
     <ClInclude Include="src\vertexbufferLayout_vao_Group.h" />
     <ClInclude Include="src\Render\Triangle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Render\DynamicTextureBuffer.cpp" />
+    <ClCompile Include="src\DynamicEnvironmentBuffer.cpp" />
+    <ClCompile Include="src\DrawBlock.cpp" />
     <ClCompile Include="src\DepthMapBuffer.cpp" />
     <ClCompile Include="src\DynamicVertexbufferLayout.cpp" />
     <ClCompile Include="src\ImguiFunction.cpp" />

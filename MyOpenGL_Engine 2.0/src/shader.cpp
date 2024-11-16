@@ -95,6 +95,7 @@ unsigned int Shader::CreatShader(unsigned int type, const std::string& shaderfil
 //报错输出日志:
 	if (checker == GL_FALSE)
 	{
+		system("color 04");
 		int length;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 		char* errorMessage = (char*)_malloca(length * sizeof(char));
@@ -131,7 +132,10 @@ int Shader::setuniformname(const std::string& name)
 		return m_uniform_locationCache[name];
 	int location = glGetUniformLocation(m_shaderID, name.c_str());
 	if (location == -1)
-		std::cout << "文件地址：" << m_filepath.str() << "\n[设置统一变量错误]" << name << "此变量可能未创建或未使用！" << std::endl;
+	{
+		system("color 06");
+		std::cout << "文件地址：" << m_filepath.str() << "\n[设置统一变量警告]" << name << "此变量可能未创建或未使用！" << std::endl;
+	}
 	m_uniform_locationCache[name] = location;
 	return location;
 }

@@ -2,16 +2,23 @@
 
 light::light(GLFWwindow* window)
 	:m_window(window),
-	m_move(0.0f, 0.0f, 0.0f), m_Plight_dis(1.0f),m_object_dis(1.0f),
+	m_move(0.0f, 0.0f, 0.0f), m_Plight_dis(1.0f), m_object_dis(1.0f),
 	m_location{ {0.0f,0.0f,0.0f},{60.0f,60.0f,60.0f},{-60.0f,60.0f,60.0f},{60.0f,-60.0f,60.0f},{-60.0f,-60.0f,60.0f},{60.0f,60.0f,-60.0f},{-60.0f,60.0f,-60.0f},{60.0f,-60.0f,-60.0f},{-60.0f,-60.0f,-60.0f} },
 	m_move1{ {-70.0f,0.0f,0.0f},{70.0f,0.0f,0.0f},{0.0f,-70.0f,0.0f},{0.0f,70.0f,0.0f},{0.0f,0.0f,-70.0f},{0.0f,0.0f,70.0f} },
 	m_lightcolor{ 1.0f,1.0f,1.0f }, m_skyboxLight(0.0f),
-	m_camera_Pos(0.0f, 41.0f, 25.0f), m_camera_Fro(0.0f, 0.0f, 1.0f), m_camera_Up(0.0f, 1.0f, 0.0f)
+	m_camera_Pos(0.0f, 41.0f, 25.0f), m_camera_Fro(0.0f, 0.0f, 1.0f), m_camera_Up(0.0f, 1.0f, 0.0f),
+	//test:
+	m_test_color{ {1.0f,0.0f,0.0f},{1.0f,0.75f,0.0f},{1.0f,1.0f,0.0f},{0.0f,1.0f,0.0f},{0.0f,0.2f,1.0f},{1.0f,0.0f,1.0f} }
 {
 	std::cout << "Running light.cpp" << std::endl;
-	m_shader.reset(new Shader("./sharder/light/BasicShader3D_object.shader"));
-	m_shader1.reset(new Shader("./sharder/light/BasicShader3D_light_object.shader"));
-	m_shaderSkybox.reset(new Shader("./sharder/light/SkyboxShader.shader"));
+	m_shader.reset(new Shader("./shader/light/BasicShader3D_object.shader"));
+	m_shader1.reset(new Shader("./shader/light/BasicShader3D_light_object.shader"));
+	m_shaderSkybox.reset(new Shader("./shader/light/SkyboxShader.shader"));
+
+	//test:
+	m_test_block.reset(new Shader("./shader/light/BasicShader3D(color).shader"));
+	m_test_drawblock.reset(new DrawBlock(8.0f,8.0f,8.0f));
+
 	//VAO 0µÄÉèÖÃ£º
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
@@ -243,7 +250,7 @@ light::light(GLFWwindow* window)
 	m_control_Camera = std::make_unique<KeyControlFor3D>(m_window, true, true);
 }
 
-void light::renderContext()
+void light::renderContext(float timestep, float milltimestep)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -333,6 +340,16 @@ void light::renderContext()
 		m_shader1->setuniformMat4f("u_MVP", MVP2);
 		glDrawElements(GL_TRIANGLES, LayoutNum_1, GL_UNSIGNED_INT, nullptr);
 	}
+//test:
+	m_test_block->bind();
+	for (int i = 0; i < 6; i++)
+	{
+		glm::mat4 test_model = glm::translate(glm::mat4(1.0f), m_move1[i]);
+		glm::mat4 test_MVP = m_project * CameraView * test_model;
+		m_test_block->setuniformMat4f("u_MVP", test_MVP);
+		m_test_block->setuniformVEC3("test_color", m_test_color[i].x, m_test_color[i].y, m_test_color[i].z);
+		m_test_drawblock->DrawCall();
+	}
 
 //äÖÈ¾Ìì¿ÕºÐ£º
 	glDepthFunc(GL_LEQUAL);
@@ -357,5 +374,5 @@ void light::renderImguiContext()
 		m_move = { 0.0f, 0.0f, 0.0f };
 	ImGui::ColorEdit3("light color",&m_lightcolor.x);
 	ImGui::Text("camera position: x:%.2f  y:%.2f  z:%2.f  fov:%.2f", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z, m_fov + 45.0f);
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::Text("Tips:\n Press F key can turn on the flash light!");
 }

@@ -8,6 +8,7 @@
 #include"ShadowMap2.h"
 #include"stencil_test.h"
 #include"Triangle.h"
+#include"DynamicTextureBuffer.h"
 
 #include<iostream>
 #include<GL/glew.h>
@@ -24,7 +25,7 @@ public:
 	//如果是'AUTO',请准确填已注册的ProjectNum参数到auto_ProjectNum,主要用在Debug配置下用
 	//如果是'MYSELF',会在终端提醒输入,此处的auto_ProjectNum参数随意,主要用在Release配置下用
 	RenderControler(GLFWwindow* window,usemode mode, int auto_ProjectNum);
-	int renderContextControl();
+	int renderContextControl(float timestep, float milltimestep);
 	void renderImguiContextControl();
 
 private:
@@ -41,4 +42,5 @@ private:
 	std::unique_ptr<ShadowMap2> m_ShadowMap2;
 	std::unique_ptr<stencil_test> m_stencil_test;
 	std::unique_ptr<Triangle> m_Triangle;
+	std::unique_ptr<DynamicTextureBuffer> m_DynamicTextureBuffer_test;
 };

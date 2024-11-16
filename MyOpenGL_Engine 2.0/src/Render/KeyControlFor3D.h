@@ -12,6 +12,7 @@ public:
 	~KeyControlFor3D();
 	//普通相机移动系统函数，以一个参数为相机的初始位置，第二个参数是相机的初始视线朝向，第三个参数是相机上下移动的向量，第四个参数是移动速度
 	glm::mat4 CameraMove(glm::vec3* Position, glm::vec3* Front, glm::vec3* Up, float speed);
+	//此函数侦听鼠标滚轮事件后返回fov值，需配合glm中的perspective函数使用：
 	float MousescrollFunction();
 
 private:

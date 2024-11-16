@@ -10,12 +10,15 @@
 #include"TextureBlock.h"
 #include"Render/KeyControlFor3D.h"
 
+//tets:
+#include"DrawBlock.h"
+
 class light
 {
 public:
 	light(GLFWwindow* window);
 
-	void renderContext();
+	void renderContext(float timestep, float milltimestep);
 	void renderImguiContext();
 private:
 	float m_fov;
@@ -45,4 +48,9 @@ private:
 	std::unique_ptr<texture32> m_texture32;
 	std::unique_ptr<TextureBlock> m_textureblock;
 	std::unique_ptr<KeyControlFor3D> m_control_Camera;
+
+	//test:
+	std::shared_ptr<Shader> m_test_block;
+	std::shared_ptr<DrawBlock> m_test_drawblock;
+	glm::vec3 m_test_color[6];
 };

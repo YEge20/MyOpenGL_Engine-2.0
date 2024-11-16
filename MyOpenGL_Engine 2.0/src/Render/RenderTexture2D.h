@@ -16,7 +16,7 @@ class RenderTexture2D
 public:
 	RenderTexture2D(GLFWwindow* window);
 
-	void renderContext();
+	void renderContext(float timestep, float milltimestep);
 	void renderImguiContext();
 
 private:

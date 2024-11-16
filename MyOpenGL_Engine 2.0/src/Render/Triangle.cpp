@@ -4,14 +4,14 @@ Triangle::Triangle(GLFWwindow* window)
 	:m_window(window)
 {
     std::cout << "Running Triangle.cpp" << std::endl;
-    m_shader.reset(new Shader("./sharder/BasicShader2.shader"));
+    m_shader.reset(new Shader("./shader/BasicShader2.shader"));
 #define triangle 28
     float trianglevertex[triangle] =
     {
         //vertex:                //color:           
-        -260.0f,-260.0f, 0.0f,  1.0f,0.2f,0.2f,1.0f,//0
-         260.0f,-260.0f, 0.0f,  0.2f,1.0f,0.2f,1.0f,//1
-        -260.0f, 260.0f, 0.0f,  0.2f,0.2f,1.0f,1.0f,//2
+        -260.0f,-260.0f, 0.0f,  1.0f,0.0f,0.0f,1.0f,//0
+         260.0f,-260.0f, 0.0f,  0.0f,1.0f,0.0f,1.0f,//1
+        -260.0f, 260.0f, 0.0f,  0.0f,0.0f,1.0f,1.0f,//2
          260.0f, 260.0f, 0.0f,  1.0f,1.0f,0.0f,1.0f //3
     };
 #define indexOftriangle 2
@@ -29,8 +29,11 @@ Triangle::Triangle(GLFWwindow* window)
     m_vertexbufferlayout->AttribPointer(indexOftriangle, triangleIndex, 7);
 }
 
-void Triangle::renderContext()
+void Triangle::renderContext(float timestep, float milltimestep)
 {
+    m_timestep = timestep;
+    m_milltimestep = milltimestep;
+
     glm::mat4 project = glm::ortho(-600.0f,600.0f,-400.0f,400.0f,0.0f,1.0f);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -48,5 +51,5 @@ void Triangle::renderContext()
 void Triangle::renderImguiContext()
 {
     ImGui::Text("This is a simple way to draw two triangles.\nPress Esc to end the program...");
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    ImGui::Text("receice timestep: %.3f s = %.3f ms", m_timestep, m_milltimestep);
 }

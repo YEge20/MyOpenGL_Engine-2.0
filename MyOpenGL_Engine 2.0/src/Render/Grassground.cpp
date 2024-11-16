@@ -20,9 +20,9 @@ GrassGround::GrassGround(GLFWwindow* window)
 	m_grass_move(0.0f,-120.0f,0.0f),m_red(0),m_grass_2_move(0.0f,-112.0f,0.0f)
 {
 	std::cout << "Running Grassground.cpp" << std::endl;
-	m_shader.reset(new Shader("./sharder/Grassground/BasicShader3D(Light_version)2.shader"));
-	m_shader_1.reset(new Shader("./sharder/Grassground/GrassGround.shader"));
-	m_shader_2.reset(new Shader("./sharder/Grassground/Grass.shader"));
+	m_shader.reset(new Shader("./shader/Grassground/BasicShader3D(Light_version)2.shader"));
+	m_shader_1.reset(new Shader("./shader/Grassground/GrassGround.shader"));
+	m_shader_2.reset(new Shader("./shader/Grassground/Grass.shader"));
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
 	{
@@ -226,7 +226,7 @@ GrassGround::GrassGround(GLFWwindow* window)
 	m_control_Camera = std::make_unique<KeyControlFor3D>(m_window, true, true);
 }
 
-void GrassGround::renderContext()
+void GrassGround::renderContext(float timestep, float milltimestep)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -317,6 +317,5 @@ void GrassGround::renderImguiContext()
 	ImGui::SliderFloat("red", &m_red, 0.0f, 1.0f);
 	ImGui::SliderFloat("speed+", &m_rotaspeed, 0.0f, 5.0f);
 	ImGui::Text("camera position: x:%.2f  y:%.2f  z:%2.f   fov:%.2f", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z, 45.0f + m_fov);
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::Text("rota speed: %.2f , rad:%.2f", m_speed_add, m_rad);
 }

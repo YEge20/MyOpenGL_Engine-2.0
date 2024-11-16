@@ -36,8 +36,8 @@ RenderTexture2D::RenderTexture2D(GLFWwindow* window)
     m_light{0.0f}, m_rota(0.0f),m_XY{0.0f},m_time(0)
 {    
     std::cout << "Running 2D system\n" << std::endl;
-    m_shader.reset(new Shader("./sharder/RenderTexture2D/ComplexShaderFor2D.shader"));
-    m_shader1.reset(new Shader("./sharder/RenderTexture2D/BasicShader.shader"));
+    m_shader.reset(new Shader("./shader/RenderTexture2D/ComplexShaderFor2D.shader"));
+    m_shader1.reset(new Shader("./shader/RenderTexture2D/BasicShader.shader"));
 
  //±≥æ∞ª∫¥Ê…Ë÷√£∫
 #define background 28
@@ -78,7 +78,7 @@ RenderTexture2D::RenderTexture2D(GLFWwindow* window)
     m_keyboard = std::make_unique<KeyControlFunction>(m_window);
 }
 
-void RenderTexture2D::renderContext()
+void RenderTexture2D::renderContext(float timestep, float milltimestep)
 {
     glClear(GL_COLOR_BUFFER_BIT);
 //‰÷»æ±≥æ∞£∫
@@ -151,5 +151,4 @@ void RenderTexture2D::renderImguiContext()
         m_rota = 0.0f;
     ImGui::ColorEdit3("ObjectColor change:", m_light);
     ImGui::Text("X:%.2f,Y:%.2f",vertex[40]+10,vertex[41]+10);
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 }

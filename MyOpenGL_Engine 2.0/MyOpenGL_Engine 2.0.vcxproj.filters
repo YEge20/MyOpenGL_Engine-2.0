@@ -1382,6 +1382,10 @@
     <ClInclude Include="src\vertexbufferLayout.h" />
     <ClInclude Include="src\vertexbufferLayout_vao_Group.h" />
     <ClInclude Include="src\Render\Triangle.h" />
+    <ClInclude Include="src\DrawBlock.h" />
+    <ClInclude Include="src\DynamicEnvironmentBuffer.h" />
+    <ClInclude Include="src\Render\DynamicTextureBuffer.h" />
+    <ClInclude Include="src\timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DepthMapBuffer.cpp" />
@@ -1453,5 +1457,8 @@
     <ClCompile Include="src\vertexbufferLayout.cpp" />
     <ClCompile Include="src\vertexbufferLayout_vao_Group.cpp" />
     <ClCompile Include="src\Render\Triangle.cpp" />
+    <ClCompile Include="src\DrawBlock.cpp" />
+    <ClCompile Include="src\DynamicEnvironmentBuffer.cpp" />
+    <ClCompile Include="src\Render\DynamicTextureBuffer.cpp" />
   </ItemGroup>
 </Project>

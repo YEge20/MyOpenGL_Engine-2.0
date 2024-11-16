@@ -10,25 +10,27 @@ RenderControler::RenderControler(GLFWwindow* window, usemode mode, int auto_Proj
 		MyselfRenderControl();
 }
 
-int RenderControler::renderContextControl()
+int RenderControler::renderContextControl(float timestep, float milltimestep)
 {
 	//×¢²áäÖÈ¾¶ÔÏóµÄäÖÈ¾ÄÚÈÝ(±ØÐë)£º
 	if (m_singleObject == 0)
-		m_Triangle->renderContext();
+		m_Triangle->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 1)
-		m_Render3D_Camera->renderContext();
+		m_Render3D_Camera->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 2)
-		m_RenderTexture2D->renderContext();
+		m_RenderTexture2D->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 3)
-		m_light->renderContext();
+		m_light->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 4)
-		m_grass->renderContext();
+		m_grass->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 5)
-		m_ShadowMap->renderContext();
+		m_ShadowMap->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 6)
-		m_ShadowMap2->renderContext();
+		m_ShadowMap2->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 7)
-		m_stencil_test->renderContext();
+		m_stencil_test->renderContext(timestep, milltimestep);
+	else if (m_singleObject == 8)
+		m_DynamicTextureBuffer_test->renderContext(timestep, milltimestep);
 	else
 		return -1;
 }
@@ -52,6 +54,8 @@ void RenderControler::renderImguiContextControl()
 		m_ShadowMap2->renderImguiContext();
 	else if (m_singleObject == 7)
 		m_stencil_test->renderImguiContext();
+	else if (m_singleObject == 8)
+		m_DynamicTextureBuffer_test->renderImguiContext();
 
 }
 
@@ -76,6 +80,8 @@ int RenderControler::AutoRenderControl(int projectnum)
 		m_ShadowMap2 = std::make_unique<ShadowMap2>(m_window);
 	else if (m_singleObject == 7)
 		m_stencil_test = std::make_unique<stencil_test>(m_window);
+	else if (m_singleObject == 8)
+		m_DynamicTextureBuffer_test = std::make_unique<DynamicTextureBuffer>(m_window);
 	else
 	{
 		system("color 04");
@@ -96,6 +102,7 @@ int RenderControler::MyselfRenderControl()
 	std::cout << "#5                 ShadowMap.cpp\n";
 	std::cout << "#6                 ShadowMap2.cpp\n";
 	std::cout << "#7                 stencil_test.cpp\n";
+	std::cout << "#8                 DynamicTextureBuffer.cpp\n";
 	std::cout << "please input a ProjectNum you want:";
 	int x;
 	scanf_s("%d", &x);

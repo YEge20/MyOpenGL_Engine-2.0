@@ -9,10 +9,10 @@ stencil_test::stencil_test(GLFWwindow* window)
 	m_camera_Pos(0.0f, 41.0f, 25.0f), m_camera_Fro(0.0f, 0.0f, 1.0f), m_camera_Up(0.0f, 1.0f, 0.0f)
 {
 	std::cout << "Running stencil_test.cpp" << std::endl;
-	m_shader.reset(new Shader("./sharder/light/BasicShader3D_object.shader"));
-	m_shader1.reset(new Shader("./sharder/light/BasicShader3D_light_object.shader"));
-	m_shader_stencil.reset(new Shader("./sharder/light/StencilTest.shader"));
-	m_shaderSkybox.reset(new Shader("./sharder/light/SkyboxShader.shader"));
+	m_shader.reset(new Shader("./shader/light/BasicShader3D_object.shader"));
+	m_shader1.reset(new Shader("./shader/light/BasicShader3D_light_object.shader"));
+	m_shader_stencil.reset(new Shader("./shader/light/StencilTest.shader"));
+	m_shaderSkybox.reset(new Shader("./shader/light/SkyboxShader.shader"));
 	//VAO 0µÄÉèÖÃ£º
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
@@ -246,7 +246,7 @@ stencil_test::stencil_test(GLFWwindow* window)
 	glEnable(GL_STENCIL_TEST);
 }
 
-void stencil_test::renderContext()
+void stencil_test::renderContext(float timestep, float milltimestep)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -407,5 +407,5 @@ void stencil_test::renderImguiContext()
 		ImGui::ColorEdit3("light_color", &m_lightcolor.x);
 	}
 	ImGui::Text("camera position: x:%.2f  y:%.2f  z:%2.f  fov:%.2f", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z, m_fov + 45.0f);
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::Text("Tips:\n Press F key can turn on the flash light!");
 }

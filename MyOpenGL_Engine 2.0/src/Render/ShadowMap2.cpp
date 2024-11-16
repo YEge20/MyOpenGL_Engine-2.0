@@ -18,14 +18,25 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 		{-7.7f,0.0f,-16.7f},{14.0f,0.0f,2.6f},{-19.5f,0.0f,1.6f},{24.5f,0.0f,7.1f},{3.3f,0.0f,17.7f}
 	},
 	m_grass_move(0.0f, -120.0f, 0.0f), m_grass_2_move(0.0f, -109.5f, 0.0f), m_flower_move(0.0f, -112.0f, 0.0f), m_france_position(-40.0f, 0.6f, 55.4f),
-	m_day(true)
+	m_day(true),m_rain_strength_light(1.0f)
 
 {
 	std::cout << "Running ShadowMap2.cpp" << std::endl;
-	m_shader.reset(new Shader("./sharder/depth2/BasicShader3D(Light_version)3.shader"));
-	m_shader_1.reset(new Shader("./sharder/depth2/GrassGround.shader"));
-	m_shader_2.reset(new Shader("./sharder/depth2/Grass.shader"));
-	m_shader_depth.reset(new Shader("./sharder/depth2/depthMap.shader"));
+	m_shader.reset(new Shader("./shader/depth2/BasicShader3D(Light_version)3.shader"));
+	m_shader_1.reset(new Shader("./shader/depth2/GrassGround.shader"));
+	m_shader_2.reset(new Shader("./shader/depth2/Grass.shader"));
+	m_shader_depth.reset(new Shader("./shader/depth2/depthMap.shader"));
+
+	m_rain_shader.reset(new Shader("./shader/depth2/Rain.shader"));
+	m_rain_drop.reset(new DrawBlock(1.0f,3.0f,1.0f));
+
+	m_rainPartical_shader.reset(new Shader("./shader/depth2/RainPartical.shader"));
+	m_rain_partical.reset(new DrawBlock(1.5f, 1.5f, 1.5f));
+
+	m_reflect_shader.reset(new Shader("./shader/depth2/WaterReflect.shader"));
+	m_water_reflect.reset(new DrawBlock(160.0f, 0.0f, 160.0f));
+	m_reflect_texture.reset(new DynamicEnvironmentBuffer(1024));
+
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
 	{
@@ -88,7 +99,6 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 		21,22,23
 	};
 	//顶点的设置：
-	//m_vertexbufferlayout = std::make_unique<vertexbufferlayout>(vertexbuffer, Layout, Databuffer3D, LayoutNum0);
 	m_vertexbufferlayout.reset(new vertexbufferlayout(vertexbuffer, Layout, Databuffer3D, LayoutNum0));
 	m_vertexbufferlayout->AttribPointer(countOfindex, DatabufferSize, 8);
 
@@ -151,7 +161,6 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 		20,21,22,
 		21,22,23
 	};
-	//m_vertexbufferlayout_1 = std::make_unique<vertexbufferLayout1>(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum);
 	m_vertexbufferlayout_1.reset(new vertexbufferlayout(grassground, grassgroundLyaout, grassgroundBuffer, grassgroundLayoutNum));
 	m_vertexbufferlayout_1->AttribPointer(grassgroundCountIndex, grassgroundIndex, 12);
 
@@ -246,7 +255,6 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 		12,13,14,
 		13,14,15
 	};
-#define tiny_stoneBuffer 
 	m_vertexbufferlayout_2 = std::make_unique<vertexbufferLayout_vao_Group>();
 
 	m_vertexbufferlayout_2->importVertex(grass, grassLayout, grassBuffer, grassLayoutNum, 0);
@@ -293,15 +301,6 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 	m_texture32->importTexture("./texture/mental_stone/lapis_ore_NEW_REFLECT_PBR.png", 24);
 	m_texture32->importTexture("./texture/mental_stone/redstone_ore_NEW_REFLECT_PBR.png", 25);
 
-	std::vector<std::string> smoker =
-	{
-		"./texture/smoker/smoker_side.png",
-		"./texture/smoker/smoker_side.png",
-		"./texture/smoker/smoker_top.png",
-		"./texture/smoker/smoker_top.png",
-		"./texture/smoker/smoker_front.png",
-		"./texture/smoker/smoker_side.png"
-	};
 	std::vector<std::string> furance =
 	{
 		"./texture/furnace/furnace_side.png",
@@ -313,7 +312,6 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 	};
 	m_textureblock1 = std::make_unique<TextureBlock8>(true, false);
 	m_textureblock1->importtexture(furance, 0);
-	m_textureblock1->importtexture(smoker, 1);
 	m_textureblock1->bind(0);
 
 	//3D渲染必须启动深度测试否则渲染过程不正确：
@@ -326,7 +324,7 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 
 }
 
-void ShadowMap2::renderContext()
+void ShadowMap2::renderContext(float timestep, float milltimestep)
 {
 
 //平行光的位置、亮度的计算
@@ -480,19 +478,63 @@ void ShadowMap2::renderContext()
 	m_shader_depth->setuniform1f("u_wave_option", 0.0f);//花草模型摇晃标识
 	m_shader_depth->setuniformMat4f("u_MVP", MVP5_depth);
 	glDrawElements(GL_TRIANGLES, LayoutNum0, GL_UNSIGNED_INT, nullptr);
+	//恢复到实际输出的渲染内容
 	m_depth_texture->unbind();
 	glViewport(0, 0, 1200, 800);
-	
-//渲染物体
-	//计算渲染的矩阵类型和摄像机裁剪空间
-	m_project = glm::perspective(glm::radians(45.0f + m_fov), (float)960 / (float)640, 0.1f, 450.0f);
-	glm::mat4 CameraView = m_control_Camera->CameraMove(&m_camera_Pos, &m_camera_Fro, &m_camera_Up, 0.8f);
-	
+
+//渲染缓冲帧：
+	m_reflect_texture->Bind();
+	m_reflect_texture->setGLTextureSlot(7);
+	glm::mat4 ortho_project = glm::ortho(-80.0f, 80.0f, -80.0f, 80.0f, 0.1f, 500.0f);
+	glm::mat4 reflect_camera = glm::lookAt(m_water_position, m_water_position + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f));
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//渲染矿石:
 	m_shader->bind();
 	glBindVertexArray(m_vertexbufferlayout->VAOid());
+	m_shader->setuniformVEC3("u_light.color", m_light_color.x, m_light_color.y, m_light_color.z);
+	m_shader->setuniformVEC3("u_view_position", m_water_position.x, m_water_position.y, m_water_position.z);
+	m_shader->setuniformVEC3("u_light.position", m_light_position.x, m_light_position.y, m_light_position.z);
+	m_shader->setuniform1f("u_render_type", 0.0);
+	m_shader->setuniform1f("u_strength_light", m_strength_light);
+	glm::mat4 LightSpaceMartix_block_for_Reflect = Lightproject * LightView;
+	m_shader->setuniformMat4f("u_LightMartix", LightSpaceMartix_block_for_Reflect);
+	m_shader->setuniform1i("u_depth_texture", 2);//深度图
+	m_depth_texture->use(2);
+	glm::mat4 move_for_Reflect = glm::translate(glm::mat4(1.0f), m_move);
+	for (int x = 0; x < 16; x++)
+	{
+		glm::mat4 moreObjectCopy = glm::translate(glm::mat4(1.0f), m_moreObject[x]);
+		glm::mat4 rota = glm::rotate(glm::mat4(1.0f), glm::radians(m_rad), m_moreObject[x]);
+		glm::mat4 floating = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.5 * sin(glm::radians(m_float_time + m_moreObject[x].x * m_moreObject[x].y)), 0.0f));
+		glm::mat4 model = move_for_Reflect * moreObjectCopy * floating * rota;
+		glm::mat4 MVP1 = ortho_project * reflect_camera * model;
+		m_shader->setuniformMat4f("u_MVP", MVP1);
+		m_shader->setuniform1i("u_sampler", 3);
+		m_shader->setuniform1i("u_sampler_light_ore_pbr", 4);
+		m_shader->setuniform1i("u_sampler_reflect_pbr", 5);
+		m_texture32->bind(3, 8 + x % 6);
+		m_texture32->bind(4, 14 + x % 6);
+		m_texture32->bind(5, 20 + x % 6);
+		m_shader->setuniformMat4f("u_model", model);
+		m_shader->setuniformMat4f("u_rota", rota);
+		m_shader->setuniform1f("u_rain_strength_light", m_rain_strength_light);
+		glDrawElements(GL_TRIANGLES, LayoutNum0, GL_UNSIGNED_INT, nullptr);
+	}
+
+	m_reflect_texture->UnBind();
+	glViewport(0, 0, 1200, 800);
+
+//渲染物体
+	//计算渲染的矩阵类型和摄像机裁剪空间
+	m_project = glm::perspective(glm::radians(45.0f + m_fov), (float)960 / (float)640, 0.1f, 450.0f);
+	glm::mat4 CameraView = m_control_Camera->CameraMove(&m_camera_Pos, &m_camera_Fro, &m_camera_Up, 0.8f);
 	m_fov = m_control_Camera->MousescrollFunction();
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//渲染矿石:
+	m_shader->bind();
+	glBindVertexArray(m_vertexbufferlayout->VAOid());
 	m_shader->setuniformVEC3("u_light.color", m_light_color.x, m_light_color.y, m_light_color.z);
 	m_shader->setuniformVEC3("u_view_position", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z);
 	m_shader->setuniformVEC3("u_light.position", m_light_position.x, m_light_position.y, m_light_position.z);
@@ -519,6 +561,7 @@ void ShadowMap2::renderContext()
 		m_texture32->bind(5, 20 + x % 6);
 		m_shader->setuniformMat4f("u_model", model);
 		m_shader->setuniformMat4f("u_rota", rota);
+		m_shader->setuniform1f("u_rain_strength_light", m_rain_strength_light);
 		glDrawElements(GL_TRIANGLES, LayoutNum0, GL_UNSIGNED_INT, nullptr);
 	}
 
@@ -555,6 +598,7 @@ void ShadowMap2::renderContext()
 	m_shader_1->setuniform1i("u_texture2", 2);//深度图
 	m_shader_1->setuniform1f("u_red", m_red_factor);
 	m_shader_1->setuniform1f("u_white", m_white_factor);
+	m_shader_1->setuniform1f("u_rain_strength_light", m_rain_strength_light);
 	glDrawElements(GL_TRIANGLES, grassgroundLayoutNum, GL_UNSIGNED_INT, nullptr);
 	//渲染花草:
 		//渲染草：
@@ -582,6 +626,7 @@ void ShadowMap2::renderContext()
 		m_shader_2->setuniform1i("u_texture0", 6);
 		m_depth_texture->use(2);
 		m_shader_2->setuniform1i("u_texture1", 2);//深度图
+		m_shader_2->setuniform1f("u_rain_strength_light", m_rain_strength_light);
 		glDrawElements(GL_TRIANGLES, grassLayoutNum, GL_UNSIGNED_INT, nullptr);
 	}
 	//渲染花：
@@ -604,6 +649,7 @@ void ShadowMap2::renderContext()
 		m_shader_2->setuniform1i("u_texture0", 6);
 		m_depth_texture->use(2);
 		m_shader_2->setuniform1i("u_texture1", 2);//深度图
+		m_shader_2->setuniform1f("u_rain_strength_light", m_rain_strength_light);
 		glDrawElements(GL_TRIANGLES, grassLayoutNum, GL_UNSIGNED_INT, nullptr);
 	}
 
@@ -619,18 +665,229 @@ void ShadowMap2::renderContext()
 	m_shader->setuniform1f("u_render_type", 1.0);
 	m_shader->setuniformMat4f("u_model", france_model);
 	m_shader->setuniformMat4f("u_rota", france_rota_depth);
+	m_shader->setuniform1f("u_rain_strength_light", m_rain_strength_light);
 	glDrawElements(GL_TRIANGLES, LayoutNum0, GL_UNSIGNED_INT, nullptr);
+
+	//绘制模拟的雨滴：
+	m_rain_shader->bind();
+	for (int y = 0;y < m_drop_lay_count; y++)
+	{
+		for (int x = 0; x < 11; x++)
+		{
+			float biasX = 16.0f * x;
+			for (int z = 0; z < 11; z++)
+			{
+				float biasZ = 16.0f * z;
+				float offsetX = 16.0f * sin(biasZ);
+				float offsetZ = 16.0f * sin(biasX);
+				float offsetY = 18.0f * sin((biasZ + biasX) * (biasX - biasZ));
+				glm::mat4 rain_model = glm::translate(glm::mat4(1.0f), glm::vec3(-80.0f + biasX + offsetX, m_drop_Yposition[y] + offsetY, -80.0f + biasZ + offsetZ));
+				glm::mat4 rain_MVP = m_project * CameraView * rain_model;
+				m_rain_shader->setuniformMat4f("u_MVP", rain_MVP);
+				m_rain_shader->setuniformMat4f("u_model", rain_model);
+				m_rain_shader->setuniformVEC3("u_light.position", m_light_position.x, m_light_position.y, m_light_position.z);
+				m_rain_shader->setuniformVEC3("u_light.color", m_light_color.x, m_light_color.y, m_light_color.z);
+				m_rain_shader->setuniformVEC3("u_view_position", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z);
+				m_rain_shader->setuniform1f("u_strength_light", m_strength_light);
+				m_rain_drop->DrawCall();
+			}
+		}
+		if (m_rain_drop_controler == true)
+			m_drop_Yposition[y] -= m_drop_speed * 1.0f;
+	}
+	//开始下雨过度：
+	if (m_rain_occure_controler == true)
+	{
+		m_rain_strength_light = 0.4f;
+		m_drop_lay_count = 1;
+		for (int x = 1; x <= 4; x++)
+		{
+			if (m_drop_Yposition[x] - m_drop_Yposition[x - 1] > 29.4f)
+				m_drop_lay_count = x + 1;
+		}
+		//更新雨层的渲染顺序：
+		if (m_drop_Yposition[0] < -102.0f)
+		{
+			float middle = 0;
+			for (int x = 0; x < 4; x++)
+			{
+				middle = m_drop_Yposition[x + 1];
+				m_drop_Yposition[x + 1] = m_drop_Yposition[x];
+				m_drop_Yposition[x] = middle;
+			}
+			m_drop_Yposition[4] = 45.0f;
+		}
+	}
+	//结束下雨过度：
+	if (m_rain_occure_controler == false)
+	{
+		m_rain_strength_light = 1.0f;
+		//更新雨层的渲染顺序：
+		if (m_drop_Yposition[0] < -102.0f)
+		{
+			float middle = 0;
+			for (int x = 0; x < 4; x++)
+			{
+				middle = m_drop_Yposition[x + 1];
+				m_drop_Yposition[x + 1] = m_drop_Yposition[x];
+				m_drop_Yposition[x] = middle;
+			}
+			m_drop_Yposition[4] = 45.0f;
+		}
+		for (int x = 4; x >=0; x--)
+		{
+			if (m_drop_Yposition[x] == 45.0f)
+				m_drop_lay_count = x;
+		}
+	}
+
+	//雨水的粒子效果:
+	m_rainPartical_shader->bind();
+	if (m_drop_lay_count == 5 && m_rain_occure_controler == true)//开始下雨时且雨层达到5就执行的数据更新方案
+	{
+		m_partical_alpha += 0.005f;
+		if (m_partical_alpha > 1.0f)
+			m_partical_alpha = 1.0f;
+		if (m_rain_drop_controler == true)
+		{
+			if (m_partical_tick < 360.0f)
+				m_partical_tick += 5.0f;//开始下雨后就开始计时
+			if (m_partical_tick >= 360.0f)
+				m_partical_tick = 0.0f;
+			for (int x = 0; x < 4; x++)//计算坐标值
+			{
+				m_partical[x] += 0.05f * m_partical_front[x];
+				m_partical[x].y = abs(m_hight * sin(glm::radians(m_partical_tick)));
+			}
+		}
+	}
+	if (m_rain_occure_controler == false)//下雨结束时执行的数据更新方案
+	{
+		m_hight -= 0.05f;
+		if (m_hight < 0.0f)
+			m_hight = 0.0f;
+		m_partical_alpha -= 0.0025f;
+		if (m_partical_alpha < 0.0f)
+			m_partical_alpha = 0.0f;
+		if (m_partical_tick < 360.0f)
+			m_partical_tick += 5.0f;
+		if (m_partical_tick >= 360.0f)
+			m_partical_tick = 0.0f;
+		for (int x = 0; x < 4; x++)//计算坐标值
+		{
+			if (m_hight > 0.0f)
+				m_partical[x] += 0.05f * m_partical_front[x];
+			m_partical[x].y = abs(m_hight * sin(glm::radians(m_partical_tick)));
+		}
+	}
+
+	if (m_partical_tick >= 135.0f && m_rain_occure_controler == true)//恢复粒子的初始状态，来进入下一次重复动画
+	{
+		for (int x = 0; x < 4; x++)
+			m_partical[x] = { 0.0f,0.0f,0.0f };
+		m_hight = 5.0f;
+		m_partical_tick = 0.0f;
+	}
+
+	if (m_partical_alpha > 0.0f)//只有粒子看得见才渲染
+		for (int z = -2; z < 3; z++)
+		{
+			float biasZ = 15.0f * z;
+			for (int y = -2; y < 3; y++)
+			{
+				float biasX = 20.0f * y;
+				for (int x = 0; x < 4; x++)
+				{
+					float offsetX = 14.0f * sin(biasZ + biasX * biasZ);
+					float offsetZ = 17.5f * sin(biasX + biasX * biasZ);
+					glm::mat4 rain_partical_position = glm::translate(glm::mat4(1.0f), m_partical[x]);
+					glm::mat4 rain_partical_center_position = glm::translate(glm::mat4(1.0f), glm::vec3(m_partical_center.x + biasX + offsetX, m_partical_center.y, m_partical_center.z + biasZ + offsetZ));
+					glm::mat4 rain_partical_model = rain_partical_center_position * rain_partical_position;
+					glm::mat4 rain_partical_MVP = m_project * CameraView * rain_partical_model;
+					m_rainPartical_shader->setuniformMat4f("u_MVP", rain_partical_MVP);
+					m_rainPartical_shader->setuniformMat4f("u_model", rain_partical_model);
+					m_rainPartical_shader->setuniformVEC3("u_light.position", m_light_position.x, m_light_position.y, m_light_position.z);
+					m_rainPartical_shader->setuniformVEC3("u_light.color", m_light_color.x, m_light_color.y, m_light_color.z);
+					m_rainPartical_shader->setuniformVEC3("u_view_position", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z);
+					m_rainPartical_shader->setuniform1f("u_strength_light", m_strength_light);
+					m_rainPartical_shader->setuniform1f("u_alpha", m_partical_alpha);
+					m_rain_partical->DrawCall();
+				}
+			}
+		}
+
+	//水坑的映射：
+	if (m_rain_occure_controler == true)
+	{
+		if (m_day == true)
+			m_reflect_alpha_setup = 0.5f;
+		else
+			m_reflect_alpha_setup = 0.25f;
+	}
+	else
+		m_reflect_alpha_setup = 0.0f;
+	if (m_reflect_alpha < m_reflect_alpha_setup)
+		m_reflect_alpha += 0.001f;
+	if (m_reflect_alpha > m_reflect_alpha_setup)
+		m_reflect_alpha -= 0.002f;
+	if (m_reflect_alpha < 0.0f)
+		m_reflect_alpha = 0.0f;
+	if (m_reflect_alpha > 0.0f)
+	{
+		m_reflect_shader->bind();
+		glm::mat4 reflect_layer_model = glm::translate(glm::mat4(1.0f), m_water_position);
+		glm::mat4 reflect_MVP = m_project * CameraView * reflect_layer_model;
+		m_reflect_shader->setuniformMat4f("u_MVP", reflect_MVP);
+		m_reflect_shader->setuniform1f("u_alpha", m_reflect_alpha);
+		m_reflect_shader->setuniform1i("u_ReflectTexture", 7);
+		m_water_reflect->DrawCall();
+	}
 }
 
 void ShadowMap2::renderImguiContext()
 {
-	ImGui::SliderFloat("X", &m_move.x, -30.0f, 30.0f);
-	ImGui::SliderFloat("Z", &m_move.z, -30.0f, 30.0f);
-	if (ImGui::Button("reset position"))
-		m_move = { 0.0f, -10.0f, 0.0f };
-	if (ImGui::Button("reset time speed"))
-		m_degreeOflight_speed = 0.05f;
-	ImGui::SliderFloat("time speed", &m_degreeOflight_speed, 0.0f, 0.25f);
+	if (m_GUIbutton_ore_pos_setup == true)
+	{
+		if (ImGui::Button("Close ore position setup"))
+			m_GUIbutton_ore_pos_setup = false;
+		ImGui::SliderFloat("X", &m_move.x, -30.0f, 30.0f);
+		ImGui::SliderFloat("Z", &m_move.z, -30.0f, 30.0f);
+		if (ImGui::Button("reset position"))
+			m_move = { 0.0f, -10.0f, 0.0f };
+	}
+	if (m_GUIbutton_ore_pos_setup == false && ImGui::Button("Ore position setup"))
+		m_GUIbutton_ore_pos_setup = true;
+
+	if (m_GUIbutton_time_speed_setup == true)
+	{
+		if (ImGui::Button("Close time setup"))
+			m_GUIbutton_time_speed_setup = false;
+		ImGui::SliderFloat("time speed", &m_degreeOflight_speed, 0.0f, 0.25f);
+		if (ImGui::Button("reset time speed"))
+			m_degreeOflight_speed = 0.05f;
+	}
+	if (m_GUIbutton_time_speed_setup == false && ImGui::Button("Time setup"))
+		m_GUIbutton_time_speed_setup = true;
+
+	if (m_GUIbutton_rain_event_setup == true)
+	{
+		if (ImGui::Button("Close rain event setup"))
+			m_GUIbutton_rain_event_setup = false;
+		ImGui::SliderFloat("drop speed", &m_drop_speed, 0.5f, 1.5f);
+		if (m_rain_drop_controler == true && ImGui::Button("stop drop"))
+			m_rain_drop_controler = false;
+		if (m_rain_drop_controler == false && ImGui::Button("start drop"))
+			m_rain_drop_controler = true;
+		if (m_rain_occure_controler == true && ImGui::Button("end raining event"))
+			m_rain_occure_controler = false;
+		if (m_rain_occure_controler == false && ImGui::Button("start raining event"))
+			m_rain_occure_controler = true;
+		if (ImGui::Button("reset partical alpha"))
+			m_partical_alpha = 1.0f;
+	}
+	if (m_GUIbutton_rain_event_setup == false && ImGui::Button("Rain event setup"))
+		m_GUIbutton_rain_event_setup = true;
+
 	if (ImGui::Button("reset all"))
 	{
 		m_day = true;
@@ -640,6 +897,9 @@ void ShadowMap2::renderImguiContext()
 		m_degreeOflight_speed_current = 0.05f;
 		m_temperature = 0.0f;
 		m_count_day = 0.0f;
+
+		m_rain_drop_controler = true;
+		m_rain_occure_controler = false;
 	}
 	ImGui::Text("camera position: x:%.2f  y:%.2f  z:%2.f   fov:%.2f", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z, 45.0f + m_fov);
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -647,4 +907,5 @@ void ShadowMap2::renderImguiContext()
 	ImGui::Text("rota speed: %.2f , block rota degree:%.2f", m_speed_add, m_rad);
 	ImGui::Text("wind strength: %.2f      wave degree: %.2f     wave frequence: %.2f", 1.0f + m_GrassFlower_wave, m_GrassFlower_shake_degree, m_GrassFlower_Frequency_current);
 	ImGui::Text("light position: x:%.2f,y:%.2f,z:%.2f", m_light_position.x, m_light_position.y, m_light_position.z);
+	ImGui::Text("partical alpha: %.2f", m_partical_alpha);
 }

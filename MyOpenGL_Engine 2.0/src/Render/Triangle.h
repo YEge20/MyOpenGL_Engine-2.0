@@ -13,10 +13,11 @@ class Triangle
 public:
 	Triangle(GLFWwindow* window);
 
-	void renderContext();
+	void renderContext(float timestep, float milltimestep);
 	void renderImguiContext();
 private:
 	GLFWwindow* m_window;
 	std::shared_ptr<Shader> m_shader;
 	std::shared_ptr<vertexbufferlayout> m_vertexbufferlayout;
+	float m_timestep = 0.0f, m_milltimestep = 0.0f;
 };

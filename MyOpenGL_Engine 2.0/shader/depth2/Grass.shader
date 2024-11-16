@@ -47,6 +47,7 @@ uniform float u_red;
 uniform float u_white;
 uniform Light u_light;
 uniform float u_strength_light;//平行光的强度
+uniform float u_rain_strength_light;//下雨时对漫反射的平行光的削弱值
 
 in vec2 v_texcood;
 in vec4 v_pointcolor;
@@ -91,7 +92,7 @@ void main()
     vec3 environment = vec3(0.3) * u_light.color;
 //计算漫反射：
     float diff = max(dot(-LightDir , nor) , 0.0);
-    vec3 diffuse = u_strength_light * diff * u_light.color;
+    vec3 diffuse = u_rain_strength_light * u_strength_light * diff * u_light.color;
 //计算阴影：
     float bias = max(0.0035 * (1.0 - dot(nor , LightDir)), 0.0005);
     float shadow = ShadowCaculation(v_Fragpos_LightSpace , bias);

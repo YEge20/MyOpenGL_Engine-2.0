@@ -18,7 +18,7 @@ class ShadowMap
 public:
 	ShadowMap(GLFWwindow* window);
 
-	void renderContext();
+	void renderContext(float timestep, float milltimestep);
 	void renderImguiContext();
 
 private:

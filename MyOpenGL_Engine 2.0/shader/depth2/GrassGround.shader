@@ -45,6 +45,7 @@ uniform sampler2D u_texture2;//深度贴图
 uniform float u_red;
 uniform float u_white;
 uniform float u_strength_light;//平行光的强度
+uniform float u_rain_strength_light;//下雨时对漫反射的平行光的削弱值
 
 
 in vec4 v_VerColor;
@@ -90,7 +91,7 @@ void main()
     vec3 environment = vec3(0.3) * u_light.color;
 //计算漫反射：
     float diff = max(dot(-LightDir , nor) , 0.0);
-    vec3 diffuse = u_strength_light * diff * u_light.color;
+    vec3 diffuse = u_rain_strength_light * u_strength_light * diff * u_light.color;
 //计算镜面反射：
     vec3 view_diract = normalize(u_view_position - v_Fragpos);
     vec3 HDir = normalize(-LightDir + view_diract);

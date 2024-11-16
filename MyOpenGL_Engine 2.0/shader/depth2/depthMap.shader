@@ -43,7 +43,7 @@ void main()
     if(v_wave_option == 1.0)
         {
             vec4 texture_test_alpha = texture(u_texture_test , v_texcood);
-            if(texture_test_alpha.a < 0.01)
+            if(texture_test_alpha.a < 0.1)
                 discard;
         }
 };

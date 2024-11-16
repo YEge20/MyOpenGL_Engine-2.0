@@ -24,4 +24,6 @@ void KeyControlFunction::KeyUp_Down_Left_Right(float* f1, float* f2, float speed
 	{
 		*f2 = speed;
 	}
+	if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(Window, true);
 }

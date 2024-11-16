@@ -21,10 +21,10 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 	m_red_factor(0.0f),m_white_factor(0.0f),m_day(true),m_strength_light(1.2f)
 {
 	std::cout << "Running ShadowMap.cpp" << std::endl;
-	m_shader.reset(new Shader("./sharder/depth/BasicShader3D(Light_version)3.shader"));
-	m_shader_1.reset(new Shader("./sharder/depth/GrassGround.shader"));
-	m_shader_2.reset(new Shader("./sharder/depth/Grass.shader"));
-	m_shader_depth.reset(new Shader("./sharder/depth/depthMap.shader"));
+	m_shader.reset(new Shader("./shader/depth/BasicShader3D(Light_version)3.shader"));
+	m_shader_1.reset(new Shader("./shader/depth/GrassGround.shader"));
+	m_shader_2.reset(new Shader("./shader/depth/Grass.shader"));
+	m_shader_depth.reset(new Shader("./shader/depth/depthMap.shader"));
 #define Databuffer3D 192
 	float vertexbuffer[Databuffer3D] =
 	{
@@ -314,7 +314,7 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 
 }
 
-void ShadowMap::renderContext()
+void ShadowMap::renderContext(float timestep, float milltimestep)
 {	
 //平行光的位置、亮度的计算
 	if (m_degreeOflight > 90.0f && m_day == true)//白天
@@ -611,7 +611,6 @@ void ShadowMap::renderImguiContext()
 		m_count_day = 0.0f;
 	}
 	ImGui::Text("camera position: x:%.2f  y:%.2f  z:%2.f   fov:%.2f", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z, 45.0f + m_fov);
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::Text("day: %1.f    tempreature: %.2f    u_white: %.2f    u_red: %.2f", m_count_day, m_temperature, m_white_factor, m_red_factor);
 	ImGui::Text("rota speed: %.2f , rad:%.2f", m_speed_add, m_rad);
 	ImGui::Text("wind strength: %.2f", 1.0f + m_GrassFlower_wave);
