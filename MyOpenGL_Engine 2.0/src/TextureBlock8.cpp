@@ -1,10 +1,9 @@
 #include"TextureBlock8.h"
 
-TextureBlock8::TextureBlock8(bool RGBAmode, bool LINEARmode)
+TextureBlock8::TextureBlock8(bool LINEARmode)
 	:m_texture{0}, m_data(nullptr)
 {	
 	glGenTextures(8, m_texture);
-	m_RGB = RGBAmode;
 	m_LINEAR = LINEARmode;
 }
 
@@ -17,20 +16,16 @@ void TextureBlock8::importtexture(std::vector<std::string> face, int slot)
 {	
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture[slot]);
 	int width, height, BPP;
-	if (m_RGB == true)
-		for (int i = 0; i < face.size(); i++)
-		{
-			m_data = stbi_load(face[i].c_str(), &width, &height, &BPP, 0);
+	for (int i = 0; i < face.size(); i++)
+	{
+		m_data = stbi_load(face[i].c_str(), &width, &height, &BPP, 0);
+		if (BPP == 4)
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_data);
-			stbi_image_free(m_data);
-		}
-	else
-		for (int i = 0; i < face.size(); i++)
-		{
-			m_data = stbi_load(face[i].c_str(), &width, &height, &BPP, 0);
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_data);
-			stbi_image_free(m_data);
-		}
+		else if(BPP == 3)
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_data);
+		stbi_image_free(m_data);
+	}
+
 	if (m_LINEAR == true)
 	{
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

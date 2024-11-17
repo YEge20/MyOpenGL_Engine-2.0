@@ -8,7 +8,7 @@
 class TextureBlock
 {
 public:
-	TextureBlock(std::vector<std::string> face,bool RGBAmode, bool LINEARmode);
+	TextureBlock(std::vector<std::string> face, bool LINEARmode);
 	~TextureBlock();
 
 	void bind();

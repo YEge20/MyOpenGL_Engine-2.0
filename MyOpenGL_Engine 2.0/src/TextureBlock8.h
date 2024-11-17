@@ -8,7 +8,7 @@
 class TextureBlock8
 {
 public:
-	TextureBlock8(bool RGBAmode, bool LINEARmode);//第一个参数为是否使用RGBA存储(默认为RGB),第二个参数为是否使用LINEAR过滤(默认为NEAREST)
+	TextureBlock8(bool LINEARmode);//第一个参数为是否使用RGBA存储(默认为RGB),第二个参数为是否使用LINEAR过滤(默认为NEAREST)
 	~TextureBlock8();
 
 	void importtexture(std::vector<std::string> face, int slot);
@@ -18,5 +18,5 @@ public:
 private:
 	unsigned int m_texture[8];
 	unsigned char* m_data;
-	bool m_RGB, m_LINEAR;
+	bool m_LINEAR;
 };

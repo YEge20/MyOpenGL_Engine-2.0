@@ -298,7 +298,7 @@ ShadowMap::ShadowMap(GLFWwindow* window)
 		"./texture/smoker/smoker_front.png",
 		"./texture/smoker/smoker_side.png"
 	};
-	m_textureblock = std::make_unique<TextureBlock>(smoker, true, false);
+	m_textureblock = std::make_unique<TextureBlock>(smoker, false);
 	//m_textureblock = std::make_unique<TextureBlock8>(true, false);
 	//m_textureblock->importtexture(smoker, 1);
 	//m_textureblock->bind(1);

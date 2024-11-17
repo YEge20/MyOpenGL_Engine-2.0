@@ -310,7 +310,7 @@ ShadowMap2::ShadowMap2(GLFWwindow* window)
 		"./texture/furnace/furnace_front.png",
 		"./texture/furnace/furnace_side.png"
 	};
-	m_textureblock1 = std::make_unique<TextureBlock8>(true, false);
+	m_textureblock1 = std::make_unique<TextureBlock8>(false);
 	m_textureblock1->importtexture(furance, 0);
 	m_textureblock1->bind(0);
 

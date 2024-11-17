@@ -51,5 +51,5 @@ void Triangle::renderContext(float timestep, float milltimestep)
 void Triangle::renderImguiContext()
 {
     ImGui::Text("This is a simple way to draw two triangles.\nPress Esc to end the program...");
-    ImGui::Text("receice timestep: %.3f s = %.3f ms", m_timestep, m_milltimestep);
+    ImGui::Text("receive timestep: %.3f s = %.3f ms", m_timestep, m_milltimestep);
 }

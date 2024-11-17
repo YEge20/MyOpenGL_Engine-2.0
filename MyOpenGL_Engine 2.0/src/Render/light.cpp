@@ -242,7 +242,7 @@ light::light(GLFWwindow* window)
 		"./texture/skybox/front.jpg",
 		"./texture/skybox/back.jpg"
 	};
-	m_textureblock = std::make_unique<TextureBlock>(face,false,true);
+	m_textureblock = std::make_unique<TextureBlock>(face,true);
 	m_textureblock->bind();
 	//3D渲染必须启动深度测试否侧渲染过程不正确：
 	glEnable(GL_DEPTH_TEST);
