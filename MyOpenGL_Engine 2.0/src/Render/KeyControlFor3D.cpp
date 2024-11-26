@@ -52,6 +52,8 @@ glm::mat4 KeyControlFor3D::CameraMove(glm::vec3* Position, glm::vec3* Front, glm
 		*Front = front1;
 	}
 	glm::mat4 camera = glm::lookAt(*Position, *Front + *Position, *Up);
+	m_position = *Position;
+	m_Front = *Front + *Position;
 	return camera;
 }
 float KeyControlFor3D::MousescrollFunction()
