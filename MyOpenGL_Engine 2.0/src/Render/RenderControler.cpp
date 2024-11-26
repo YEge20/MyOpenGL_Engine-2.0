@@ -31,6 +31,8 @@ int RenderControler::renderContextControl(float timestep, float milltimestep)
 		m_stencil_test->renderContext(timestep, milltimestep);
 	else if (m_singleObject == 8)
 		m_DynamicTextureBuffer_test->renderContext(timestep, milltimestep);
+	else if (m_singleObject == 9)
+		m_Pointlight_ShadowCubemap->renderContext(timestep, milltimestep);
 	else
 		return -1;
 }
@@ -56,6 +58,8 @@ void RenderControler::renderImguiContextControl()
 		m_stencil_test->renderImguiContext();
 	else if (m_singleObject == 8)
 		m_DynamicTextureBuffer_test->renderImguiContext();
+	else if (m_singleObject == 9)
+		m_Pointlight_ShadowCubemap->renderImguiContext();
 
 }
 
@@ -82,6 +86,8 @@ int RenderControler::AutoRenderControl(int projectnum)
 		m_stencil_test = std::make_unique<stencil_test>(m_window);
 	else if (m_singleObject == 8)
 		m_DynamicTextureBuffer_test = std::make_unique<DynamicTextureBuffer>(m_window);
+	else if (m_singleObject == 9)
+		m_Pointlight_ShadowCubemap = std::make_unique<Pointlight_ShadowCubemap>(m_window);
 	else
 	{
 		system("color 04");
@@ -103,6 +109,7 @@ int RenderControler::MyselfRenderControl()
 	std::cout << "#6                 ShadowMap2.cpp\n";
 	std::cout << "#7                 stencil_test.cpp\n";
 	std::cout << "#8                 DynamicTextureBuffer.cpp\n";
+	std::cout << "#9                 Pointlight_ShadowCubemap\n";
 	std::cout << "please input a ProjectNum you want:";
 	int x;
 	scanf_s("%d", &x);

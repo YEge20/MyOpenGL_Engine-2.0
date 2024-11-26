@@ -41,55 +41,25 @@ void DynamicTextureBuffer::renderContext(float timestep, float milltimestep)
 {
 	m_fov = m_control_Camera->MousescrollFunction();
 	m_project = glm::perspective(glm::radians(45.0f + m_fov), (float)1200 / (float)800, 0.1f, 450.0f);
-	m_project_ortho = glm::ortho(-60.0f, 60.0f, -40.0f, 40.0f, 0.1f, 100.0f);
-	glm::mat4 CameraView = m_control_Camera->CameraMove(&m_camera_Pos, &m_camera_Fro, &m_camera_Up, 0.5f);
+	glm::mat4 CameraView = m_control_Camera->CameraMove(&m_camera_Pos, &m_camera_Fro, &m_camera_Up, 10.0f * timestep);
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//缓冲帧渲染的内容
 	m_DynamicEnvironment->Bind();
-	m_DynamicEnvironment->setGLTextureSlot(0);
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_shader_block->bind();
-	glm::mat4 test_rota = glm::rotate(glm::mat4(1.0f), glm::radians(m_block_rotation), glm::vec3(1.0f,1.0f,0.0f));
-	glm::mat4 test_position = glm::translate(glm::mat4(1.0f), m_block_position * glm::vec3(1.0f,1.0f,1.0f));
-	glm::mat4 test_model = test_position * test_rota;
-	glm::mat4 camera_martix = glm::lookAt(m_DynamicScreen_position, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 test_MVP = m_project_ortho * camera_martix * test_model;
-	//m_shader_block->setuniformVEC3("u_block_color", 1.0f, 0.0f, 0.0f);
-	m_shader_block->setuniform1i("u_texture", 1);
-	m_shader_block->setuniformMat4f("u_MVP", test_MVP);
-	m_block_model->DrawCallTexture(1, 0, 0);
-
+	glm::mat4 project_martix = m_DynamicEnvironment->Caculate_Ortho_Project(120.0f, 80.0f, 100.0f);
+	glm::mat4 camera_martix = m_DynamicEnvironment->Caculate_Camera(m_DynamicScreen_position, glm::vec3(0.0f, 0.0f, 1.0f));
+	scene_0(project_martix, camera_martix);
 	//恢复到实际输出的渲染内容
 	m_DynamicEnvironment->UnBind();
 	glViewport(0, 0, 1200, 800);//请务必手动复原！！！否则视口的大小会被修改，导致能看到的范围会有错误
-	m_shader_block->bind();
-	glm::mat4 test_rota0 = glm::rotate(glm::mat4(1.0f), glm::radians(m_block_rotation), glm::vec3(1.0f, 1.0f, 0.0f));
-	glm::mat4 test_position0 = glm::translate(glm::mat4(1.0f), m_block_position * glm::vec3(1.0f, 1.0f, 1.0f));
-	glm::mat4 test_model0 = test_position0 * test_rota0;
-	glm::mat4 test_MVP0 = m_project * CameraView * test_model0;
-	m_shader_block->setuniformMat4f("u_MVP", test_MVP0);
-	//m_shader_block->setuniformVEC3("u_block_color", 1.0f, 0.0f, 0.0f);
-	m_shader_block->setuniform1i("u_texture", 1);
-	m_block_model->DrawCallTexture(1, 0, 0);
 
-	m_shader_blue_block->bind();
-	glm::mat4 test_blue_model = glm::translate(glm::mat4(1.0f), m_block_blue_position);
-	glm::mat4 test_blue_MVP = m_project * CameraView * test_blue_model;
-	m_shader_blue_block->setuniformMat4f("u_MVP", test_blue_MVP);
-	m_shader_blue_block->setuniformVEC3("u_block_color", 0.5f, 0.5f, 1.0f);
-	m_block_blue->DrawCall();
-
-	m_shader_DynamicTest->bind();
-	glm::mat4 test_Dynamic_model = glm::translate(glm::mat4(1.0f), m_DynamicScreen_position);
-	glm::mat4 Dynamic_MVP = m_project * CameraView * test_Dynamic_model;
-	m_shader_DynamicTest->setuniformMat4f("u_MVP", Dynamic_MVP);
-	m_shader_DynamicTest->setuniform1i("u_screenTexture", 0);//把缓冲帧得到的贴图绑定到某个平面上
-	m_shader_DynamicTest->setuniform1f("u_alpha", m_alpha);
-	m_block_Dynamic->DrawCall();
+	scene_0(m_project, CameraView);
+	scene_1(m_project, CameraView);
+	scene_2(m_project, CameraView);
 }
 
 void DynamicTextureBuffer::renderImguiContext()
@@ -100,5 +70,41 @@ void DynamicTextureBuffer::renderImguiContext()
 		m_block_position = { 0.0f,0.0f,0.0f };
 	ImGui::SliderFloat("rota", &m_block_rotation, -180.0f, 180.0f, "%.2f");
 	ImGui::Text("camera position: x:%.2f  y:%.2f  z:%2.f", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z);
+	ImGui::Text("Camera look at: x:%.2f  y:%.2f,  z:%.2f", m_control_Camera->GetCamera_Fro().x, m_control_Camera->GetCamera_Fro().y, m_control_Camera->GetCamera_Fro().z);
+	ImGui::Text("Camera direct: x:%.2f  y:%.2f  z:%.2f", m_control_Camera->GetCamera_Normalize_Fro().x, m_control_Camera->GetCamera_Normalize_Fro().y, m_control_Camera->GetCamera_Normalize_Fro().z);
 	ImGui::Text("fov: %.2f", m_fov + 45.0f);
+}
+
+void DynamicTextureBuffer::scene_0(glm::mat4 project, glm::mat4 Camera)
+{
+	m_shader_block->bind();
+	glm::mat4 test_rota0 = glm::rotate(glm::mat4(1.0f), glm::radians(m_block_rotation), glm::vec3(1.0f, 1.0f, 0.0f));
+	glm::mat4 test_position0 = glm::translate(glm::mat4(1.0f), m_block_position * glm::vec3(1.0f, 1.0f, 1.0f));
+	glm::mat4 test_model0 = test_position0 * test_rota0;
+	glm::mat4 test_MVP0 = project * Camera * test_model0;
+	m_shader_block->setuniformMat4f("u_MVP", test_MVP0);
+	m_shader_block->setuniform1i("u_texture", 1);
+	m_block_model->DrawCallTexture(1, 0, 0);
+}
+
+void DynamicTextureBuffer::scene_1(glm::mat4 project, glm::mat4 Camera)
+{
+	m_shader_blue_block->bind();
+	glm::mat4 test_blue_model = glm::translate(glm::mat4(1.0f), m_block_blue_position);
+	glm::mat4 test_blue_MVP = project * Camera * test_blue_model;
+	m_shader_blue_block->setuniformMat4f("u_MVP", test_blue_MVP);
+	m_shader_blue_block->setuniformVEC3("u_block_color", 0.5f, 0.5f, 1.0f);
+	m_block_blue->DrawCall();
+}
+
+void DynamicTextureBuffer::scene_2(glm::mat4 project, glm::mat4 Camera)
+{
+	m_shader_DynamicTest->bind();
+	m_DynamicEnvironment->setGLTextureSlot(0);
+	glm::mat4 test_Dynamic_model = glm::translate(glm::mat4(1.0f), m_DynamicScreen_position);
+	glm::mat4 Dynamic_MVP = project * Camera * test_Dynamic_model;
+	m_shader_DynamicTest->setuniformMat4f("u_MVP", Dynamic_MVP);
+	m_shader_DynamicTest->setuniform1i("u_screenTexture", 0);//把缓冲帧得到的贴图绑定到某个平面上
+	m_shader_DynamicTest->setuniform1f("u_alpha", m_alpha);
+	m_block_Dynamic->DrawCall();
 }

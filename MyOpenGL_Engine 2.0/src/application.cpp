@@ -11,7 +11,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);//必须在渲染窗口弹出之前设置glfw_opengl_profile的GLFW_OPENGL_CORE(/COMPAT)_PROFILE，即兼容模式还是核心模式
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1200, 800, "OpenGL_Engine (StudyVersion_2.5.93)", NULL, NULL);
+    window = glfwCreateWindow(1200, 800, "OpenGL_Engine (StudyVersion_2.5.98)", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -32,7 +32,7 @@ int main(void)
     glEnable(GL_MULTISAMPLE);
 
     //初始化渲染的内容：
-    RenderControler RenderControler(window, AUTO, 0);
+    RenderControler RenderControler(window, AUTO, 9);
 
     //初始化imgui功能：
     ImguiFunction ImguiFunction(window,2);

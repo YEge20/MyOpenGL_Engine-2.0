@@ -9,6 +9,7 @@
 #include"stencil_test.h"
 #include"Triangle.h"
 #include"DynamicTextureBuffer.h"
+#include"PointLight_ShadowCubemap.h"
 
 #include<iostream>
 #include<GL/glew.h>
@@ -43,4 +44,5 @@ private:
 	std::unique_ptr<stencil_test> m_stencil_test;
 	std::unique_ptr<Triangle> m_Triangle;
 	std::unique_ptr<DynamicTextureBuffer> m_DynamicTextureBuffer_test;
+	std::unique_ptr<Pointlight_ShadowCubemap> m_Pointlight_ShadowCubemap;
 };
