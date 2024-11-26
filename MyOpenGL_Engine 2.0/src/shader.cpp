@@ -6,15 +6,25 @@ Shader::Shader(const std::string& pathfile)
 	ShaderFileType src = GetShaderFile(pathfile);
 	m_filepath << pathfile;
 	std::cout << "=========================================================================" << std::endl;
-	std::cout << "ShaderContext: "<< pathfile << std::endl;
+	std::cout << "Outside ShaderContext path: " << pathfile << std::endl;
 	std::cout << src.VertexShader;
 	std::cout << src.FragmentShader << "\n=========================================================================" << std::endl;
-	m_shaderID = CreatShaderProgram(src.VertexShader,src.FragmentShader);
+	m_shaderID = CreatShaderProgram(src.VertexShader, src.FragmentShader);
 }
 
 Shader::~Shader()
 {
 	glDeleteProgram(m_shaderID);
+}
+
+void Shader::InsideShader(const std::string& vertex, const std::string& fragment)
+{
+	std::cout << "=========================================================================" << std::endl;
+	std::cout << "Inside ShaderContext: " << std::endl;
+	std::cout << vertex << std::endl;
+	std::cout << fragment << std::endl;
+	std::cout << "=========================================================================" << std::endl;
+	m_shaderID = CreatShaderProgram(vertex, fragment);
 }
 
 void Shader::bind()
