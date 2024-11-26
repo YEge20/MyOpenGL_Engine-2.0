@@ -100,6 +100,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\DynamicEnvironmentCube.h" />
     <ClInclude Include="src\Render\DynamicTextureBuffer.h" />
     <ClInclude Include="src\DynamicEnvironmentBuffer.h" />
     <ClInclude Include="src\DrawBlock.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="src\Render\Grassground.h" />
     <ClInclude Include="src\Render\KeyControl.h" />
     <ClInclude Include="src\Render\KeyControlFor3D.h" />
+    <ClInclude Include="src\Render\PointLight_ShadowCubemap.h" />
     <ClInclude Include="src\Render\Render3D_Camera.h" />
     <ClInclude Include="src\Render\RenderControler.h" />
     <ClInclude Include="src\Render\RenderTexture2D.h" />
@@ -563,6 +565,7 @@
     <ClInclude Include="src\Render\Triangle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DynamicEnvironmentCube.cpp" />
     <ClCompile Include="src\Render\DynamicTextureBuffer.cpp" />
     <ClCompile Include="src\DynamicEnvironmentBuffer.cpp" />
     <ClCompile Include="src\DrawBlock.cpp" />
@@ -572,6 +575,7 @@
     <ClCompile Include="src\Render\Grassground.cpp" />
     <ClCompile Include="src\Render\KeyControl.cpp" />
     <ClCompile Include="src\Render\KeyControlFor3D.cpp" />
+    <ClCompile Include="src\Render\PointLight_ShadowCubemap.cpp" />
     <ClCompile Include="src\Render\Render3D_Camera.cpp" />
     <ClCompile Include="src\Render\RenderControler.cpp" />
     <ClCompile Include="src\Render\RenderTexture2D.cpp" />

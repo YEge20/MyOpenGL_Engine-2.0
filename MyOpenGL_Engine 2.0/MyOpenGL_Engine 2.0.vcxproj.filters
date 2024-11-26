@@ -1386,6 +1386,8 @@
     <ClInclude Include="src\DynamicEnvironmentBuffer.h" />
     <ClInclude Include="src\Render\DynamicTextureBuffer.h" />
     <ClInclude Include="src\timestep.h" />
+    <ClInclude Include="src\Render\PointLight_ShadowCubemap.h" />
+    <ClInclude Include="src\DynamicEnvironmentCube.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DepthMapBuffer.cpp" />
@@ -1460,5 +1462,7 @@
     <ClCompile Include="src\DrawBlock.cpp" />
     <ClCompile Include="src\DynamicEnvironmentBuffer.cpp" />
     <ClCompile Include="src\Render\DynamicTextureBuffer.cpp" />
+    <ClCompile Include="src\Render\PointLight_ShadowCubemap.cpp" />
+    <ClCompile Include="src\DynamicEnvironmentCube.cpp" />
   </ItemGroup>
 </Project>
