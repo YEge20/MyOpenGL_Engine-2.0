@@ -23,6 +23,8 @@ DepthMapBuffer::DepthMapBuffer(int size)
 
 DepthMapBuffer::~DepthMapBuffer()
 {
+	glDeleteTextures(1, &m_depthMap);
+	glDeleteFramebuffers(1, &m_FBO);
 }
 
 unsigned int DepthMapBuffer::FBOid()
