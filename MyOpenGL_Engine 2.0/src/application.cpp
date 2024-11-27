@@ -35,7 +35,7 @@ int main(void)
     RenderControler RenderControler(window, AUTO, 9);
 
     //初始化imgui功能：
-    ImguiFunction ImguiFunction(window,2);
+    ImguiFunction ImguiFunction(window, 2, CHINESE, 16.5f);
 
     float time = 0.0f, lasttime = 0.0f;
 

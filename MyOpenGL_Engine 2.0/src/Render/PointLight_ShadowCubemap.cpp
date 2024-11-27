@@ -35,14 +35,11 @@ Pointlight_ShadowCubemap::Pointlight_ShadowCubemap(GLFWwindow* window)
 
 void Pointlight_ShadowCubemap::renderContext(float timestep, float milltimestep)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-
 	m_fov = m_camera_controler->MousescrollFunction();
 	m_projeect = glm::perspective(glm::radians(45.0f + m_fov), (float)1200 / (float)800, 0.1f, 800.0f);
 	m_Camera = m_camera_controler->CameraMove(&m_camera_Pos, &m_camera_Fro, &m_camera_Up, 4.5f * timestep);
 
-	//动态立方贴图捕获视角的场景
+	//动态立方贴图捕获视角的场景(离屏渲染！)：
 	m_dynamic_cube->Modifie_position(m_dynamic_Pos);
 	for (int x = 0; x < 6; x++)
 	{
@@ -56,15 +53,18 @@ void Pointlight_ShadowCubemap::renderContext(float timestep, float milltimestep)
 	glViewport(0, 0, 1200, 800);
 
 	//正常渲染场景：
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	m_scene_1(m_projeect, m_Camera, m_camera_Pos);
 	m_test_scene(m_projeect, m_Camera, m_camera_Pos);
 }
 
 void Pointlight_ShadowCubemap::renderImguiContext()
 {
+	ImGui::Text(u8"你好");
 	ImGui::Text("Camera_Pos: x=%.3f y=%.3f z=%.3f", m_camera_Pos.x, m_camera_Pos.y, m_camera_Pos.z);
 	ImGui::Text("Camera_fov: %.2f", 45.0f + m_fov);
-	ImGui::SliderFloat("rotate", &m_glass_rota, -90.0f, 90.0f, "%.1f");
+	ImGui::SliderFloat("rota", &m_glass_rota, -90.0f, 90.0f, "%.1f");
 	ImGui::SliderFloat3("dynamic cube position",&m_dynamic_Pos.x,-8.0f,8.0f,"%.1f");
 }
 
