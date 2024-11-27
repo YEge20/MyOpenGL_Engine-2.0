@@ -21,7 +21,10 @@ KeyControlFor3D::~KeyControlFor3D()
 glm::mat4 KeyControlFor3D::CameraMove(glm::vec3* Position, glm::vec3* Front, glm::vec3* Up, float speed)
 {
 	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
 		glfwSetWindowShouldClose(m_window, true);
+		std::cout << "[ESCAPE Press]: end program !" << std::endl;
+	}
 	if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
 		*Position += speed * *Front;
 	if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
